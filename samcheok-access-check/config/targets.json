@@ -1,0 +1,116 @@
+{
+  "_comment": "접근·추출 시험 대상 10곳. 기존 제공 URL의 실제 유효성은 시험 결과와 원문으로 확인해야 합니다. robots.txt 규칙을 먼저 확인합니다. 상세 URL이 없거나 추정이면 미시험/확인필요로 표시합니다. 첨부 URL은 현재 모두 미설정입니다.",
+  "targets": [
+    {
+      "name": "삼척시청_공지사항",
+      "list_url": "https://www.samcheok.go.kr/media/00083/00089.web?gcode=1002",
+      "sample_detail_url": "https://www.samcheok.go.kr/media/00083/00089.web?gcode=1002&idx=143459&amode=view&",
+      "expected_keyword": "가족 스포츠 힐링데이",
+      "attachment_url": null,
+      "attachment_note": "원문 페이지의 '가족 힐링 스포츠데이.jpg' 또는 '...제출서류.hwp' 다운로드 링크의 실제 href(예: cmsFileDown.do?atchFileId=...&fileSn=... 형태)를 페이지 소스에서 찾아 채워넣으면 첨부파일 다운로드까지 시험합니다.",
+      "item_link_pattern": "idx=(\\d+)",
+      "list_kind": "board"
+    },
+    {
+      "name": "EDUPIA_프로그램신청",
+      "list_url": "https://edupiasamcheok.kr/prgm/list.do",
+      "sample_detail_url": "https://edupiasamcheok.kr/prgm/view.do?programIdx=100",
+      "expected_keyword": "교육돌봄 담당인력 역량강화 워크숍",
+      "attachment_url": null,
+      "attachment_note": "이 프로그램에는 첨부파일이 없는 것으로 확인됨(2026.09.30 기준). 다른 회차에 첨부가 있으면 여기 채워넣기.",
+      "item_link_pattern": "programIdx=(\\d+)",
+      "list_kind": "board"
+    },
+    {
+      "name": "삼척시청소년수련관_공지사항",
+      "list_url": "https://youth.samcheok.go.kr/youth/sub/Notice.php",
+      "sample_detail_url": null,
+      "expected_keyword": null,
+      "attachment_url": null,
+      "attachment_note": "샘플 공고 URL 미확보 — list_url 접근 가능 여부만 우선 확인",
+      "item_link_pattern": "bbsData=([^&]+)",
+      "list_kind": "board",
+      "item_required_query": {
+        "mode": "view"
+      }
+    },
+    {
+      "name": "근덕청소년문화의집_공지사항",
+      "list_url": "https://wdyouth.samcheok.go.kr/wdyouth/sub/Notice.php",
+      "sample_detail_url": null,
+      "expected_keyword": null,
+      "attachment_url": null,
+      "attachment_note": "샘플 공고 URL 미확보 — list_url 접근 가능 여부만 우선 확인",
+      "item_link_pattern": "bbsData=([^&]+)",
+      "list_kind": "board",
+      "item_required_query": {
+        "mode": "view"
+      }
+    },
+    {
+      "name": "도계청소년장학센터_공지사항",
+      "list_url": "https://dgyouth.samcheok.go.kr/dgyouth/sub/Notice.php",
+      "sample_detail_url": null,
+      "expected_keyword": null,
+      "attachment_url": null,
+      "attachment_note": "샘플 공고 URL 미확보 — list_url 접근 가능 여부만 우선 확인",
+      "item_link_pattern": "bbsData=([^&]+)",
+      "list_kind": "board",
+      "item_required_query": {
+        "mode": "view"
+      }
+    },
+    {
+      "name": "강원특별자치도삼척교육지원청_공지사항",
+      "list_url": "https://sce.gwe.go.kr/boardCnts/list.do?boardID=1595&m=0301&s=kwsche",
+      "sample_detail_url": null,
+      "expected_keyword": null,
+      "attachment_url": null,
+      "attachment_note": "상세페이지가 JS 팝업 링크라 세션 내에서 직접 URL을 특정하지 못함 — list_url 접근 가능 여부만 우선 확인",
+      "item_link_pattern": "boardCnts/view.do\\?[^\"']*boardSeq=(\\d+)",
+      "list_kind": "board"
+    },
+    {
+      "name": "삼척관광문화재단_공지",
+      "list_url": "https://www.stcf.or.kr/01296/01371.web",
+      "sample_detail_url": "https://www.stcf.or.kr/01296/01371/01373.web",
+      "expected_keyword": null,
+      "attachment_url": null,
+      "attachment_note": "sample_detail_url은 '삼척 국가유산 야행' 공고로 추정되는 경로 — 실제 idx 파라미터가 필요할 수 있으니 접속 성공 시 URL 구조 재확인 필요",
+      "item_link_pattern": "idx=(\\d+)",
+      "list_kind": "board",
+      "sample_detail_verified": false
+    },
+    {
+      "name": "삼척도계도시재생현장지원센터_공지",
+      "list_url": "http://durc.or.kr/sub/sub03_01.php",
+      "sample_detail_url": "http://durc.or.kr/sub/sub03_01.php?mode=view&idx=164",
+      "expected_keyword": null,
+      "attachment_url": null,
+      "attachment_note": "도계 대학도시 거리축제 청년난장 공고로 추정되는 idx — 접속 성공 시 실제 내용과 idx 일치 여부 확인 필요",
+      "item_link_pattern": "idx=(\\d+)",
+      "list_kind": "board",
+      "sample_detail_verified": false
+    },
+    {
+      "name": "삼척교육문화관",
+      "list_url": "https://lib.gwe.go.kr/samecc/main",
+      "sample_detail_url": "https://lib.gwe.go.kr/samecc/menu/3560/lecture-event/9711",
+      "expected_keyword": "북(BOOK)파일러",
+      "attachment_url": null,
+      "attachment_note": "정확한 공지 목록 URL 미확보(도서관 메인만 확인) — main 접속 가능 여부와 샘플 상세페이지(북파일러 이야기 수사대) 접근을 함께 확인",
+      "item_link_pattern": "lecture-event/(\\d+)",
+      "list_kind": "homepage"
+    },
+    {
+      "name": "삼척시탄소중립지원센터",
+      "list_url": "https://sc-cnsc.kangwon.ac.kr/board/notice",
+      "sample_detail_url": "https://sc-cnsc.kangwon.ac.kr/board/notice/561",
+      "expected_keyword": null,
+      "attachment_url": null,
+      "attachment_note": "탄소중립 서포터즈 공고(notice/561) — 정확한 접수기간이 PDF 첨부에만 있어 접속 성공 시 첨부파일 링크 확보 우선순위 높음",
+      "item_link_pattern": "board/notice/(\\d+)",
+      "list_kind": "board"
+    }
+  ]
+}
