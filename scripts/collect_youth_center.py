@@ -41,9 +41,10 @@ class NoticePage(HTMLParser):
     """공지 section 안의 제목/문단/첨부만 읽어 네비게이션 h3를 제외한다."""
     def __init__(self, html):
         super().__init__(convert_charrefs=True)
-        self.stack, self.title_parts, self.chunks, self.chunk = [], [], [], []
+        self.stack, self.title_parts, self.head_parts, self.chunks, self.chunk = [], [], [], [], []
         self.body_seen = False
         self.attachments = []
+        self.body_images = []
         self.feed(html)
         self.flush()
 
@@ -67,6 +68,12 @@ class NoticePage(HTMLParser):
             self.stack.append((tag, attrs))
         if self.in_body():
             self.body_seen = True
+            hidden = any('hidden' in node_attrs or re.search(
+                r'display\s*:\s*none|visibility\s*:\s*hidden', node_attrs.get('style', ''), re.I)
+                for _, node_attrs in self.stack + [(tag, attrs)])
+            if tag == 'img' and attrs.get('src') and not hidden and not any(
+                    name in {'script', 'style', 'noscript', 'template'} for name, _ in self.stack):
+                self.body_images.append(attrs['src'])
         if tag == 'a' and self.has_class('bbsView') and self.has_class('file_wrap') and attrs.get('href'):
             self.attachments.append(attrs['href'])
 
@@ -81,6 +88,8 @@ class NoticePage(HTMLParser):
     def handle_data(self, value):
         if any(tag in {'script', 'style', 'noscript', 'template'} for tag, _ in self.stack):
             return
+        if self.has_class('bbsView') and self.has_class('view_head'):
+            self.head_parts.append(value)
         if self.has_class('bbsView') and self.has_class('view_head') and any(tag == 'h3' for tag, _ in self.stack):
             self.title_parts.append(value)
         if self.in_body():
@@ -225,7 +234,24 @@ def parse_detail(raw_html, url, written_year=None):
         full = urllib.parse.urljoin(url, href)
         if urllib.parse.urlsplit(full).scheme in {'http', 'https'}:
             attachments.append(full)
-    valid = bool(page.title and page.body_seen and page.chunks)
+    # 공지 본문 안의 같은 출처 편집기 업로드 이미지만 메타자료로 기록한다.
+    # 이 URL은 본문 이미지의 참조이며, 다운로드나 이미지 내용 검증의 증거가 아니다.
+    source = urllib.parse.urlsplit(url)
+    body_image_urls = []
+    for src in page.body_images:
+        full = urllib.parse.urljoin(url, src)
+        image_url = urllib.parse.urlsplit(full)
+        if (image_url.scheme in {'http', 'https'} and
+                (image_url.scheme, image_url.netloc) == (source.scheme, source.netloc) and
+                image_url.path.startswith('/youth/bbsDown/editor_up/') and
+                re.search(r'\.(?:jpe?g|png|gif|webp)$', image_url.path, re.I)):
+            if full not in body_image_urls:
+                body_image_urls.append(full)
+    head_publication = re.search(r'작성일\s*[:：]?\s*(\d{4}-\d{2}-\d{2})', ''.join(page.head_parts))
+    image_only = bool(not page.chunks and body_image_urls and published_date and
+                      head_publication and head_publication.group(1) == published_date)
+    valid = bool(page.title and page.body_seen and (page.chunks or image_only))
+    body_content_type = 'text' if page.chunks else ('image_only' if image_only else 'unconfirmed')
     return {
         'title': page.title,
         'target': fields.get('target') or None,
@@ -236,6 +262,11 @@ def parse_detail(raw_html, url, written_year=None):
         'attachment_url': attachments[0] if attachments else None,
         'attachment_urls': attachments, 'attachments_downloaded': False,
         'url': url, 'published_date': published_date,
+        'body_content_type': body_content_type,
+        'body_image_urls': body_image_urls,
+        'body_images_downloaded': False,
+        'image_content_extracted': False,
+        'review_reason': '본문 이미지: 내용 자동 추출 미실행' if image_only else None,
         'application_year_source': year_source,
         'notice_type': 'review',
         'review_state': 'pending' if start and end else 'needs_review',
@@ -243,7 +274,9 @@ def parse_detail(raw_html, url, written_year=None):
         'status_basis': '공고 접수일 기준; 정원/선착순 조기마감 여부 미검증',
         'date_resolution': 'date_range' if start and end else 'needs_review',
         '_parse_valid': valid,
-        '_parse_note': '공지 제목/본문 구조 확인' if valid else '공지 제목/본문 구조 또는 본문 텍스트 미확인',
+        '_parse_note': ('공지 제목/본문 이미지 링크 구조 확인; 이미지 내용 미추출' if image_only and valid
+                        else ('공지 제목/본문 구조 확인' if valid
+                              else '공지 제목/본문 구조 또는 본문 텍스트 미확인')),
     }
 
 
@@ -271,6 +304,8 @@ def main():
     old_programs = existing.get('programs', [])
     records = {str(p['id']): dict(p) for p in old_programs if isinstance(p, dict) and p.get('id') is not None}
     legacy = [p for p in old_programs if not isinstance(p, dict) or p.get('id') is None]
+    # last_success_at은 목록에 나온 공고 메타자료를 전부 수집한 시각이다.
+    # 기간·대상·이미지·첨부 내용 검수 완료나 프로그램 게시 승인 시각이 아니다.
     previous_success = existing.get('last_success_at')
     # 옛 updated_at은 시도 시각일 수 있으므로 성공 시각으로 승격하지 않는다.
     result = dict(existing, institution=TARGET_NAME, updated_at=attempted_at,
@@ -278,6 +313,7 @@ def main():
                   review_state='needs_review',
                   collection_scope={'pages': 1, 'completeness': 'unverified'},
                   quality={'listed_details': 0, 'successful_details': 0,
+                           'text_details': 0, 'image_only_details': 0,
                            'failed_details': 0, 'preserved_records': len(old_programs)},
                   detail_failures=[])
     for record in records.values():
@@ -334,6 +370,7 @@ def main():
                           last_seen_at=attempted_at, source_status='current', stale=False)
             records[item_id] = detail
             successful += 1
+            quality['image_only_details' if detail['body_content_type'] == 'image_only' else 'text_details'] += 1
         except Exception as exc:
             result['detail_failures'].append({'id': item_id, 'url': item['url'],
                                              'reason': f'{type(exc).__name__}: {exc}'})
@@ -349,7 +386,10 @@ def main():
         result['last_success_at'] = attempted_at
         result['review_state'] = ('needs_review' if any(p.get('review_state') == 'needs_review'
                                  for p in records.values()) else 'pending')
-    result['status'] = f'수집 완료(첫 페이지 상세 {successful}건 확인)'
+    result['status'] = (f"수집 완료(첫 페이지 공고 {successful}건 저장: "
+                        f"본문 텍스트 {quality['text_details']}건·이미지 본문 {quality['image_only_details']}건)")
+    if quality['image_only_details']:
+        result['status'] += ' — 이미지 내용 미추출·검토 필요'
     if result['detail_failures']:
         result['status'] += f", 부분 실패 {len(result['detail_failures'])}건 — 이전 자료 보존"
     result['programs'] = sorted(records.values(),

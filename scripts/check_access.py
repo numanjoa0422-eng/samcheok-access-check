@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Access and extraction probe, not a complete event crawler. Python 3.11+."""
 import hashlib
+import http.client
 import json
 import os
 import re
+import ssl
 import sys
 import time
 import urllib.error
@@ -23,6 +25,8 @@ USER_AGENT = 'SamcheokKiwoomAccessCheck/1.1'
 TIMEOUT_SECONDS = 15
 MAX_BYTES = 8 * 1024 * 1024
 MIN_REQUEST_INTERVAL = 1.5
+MAX_GET_ATTEMPTS = 3
+GET_RETRY_BACKOFF = (1.0, 2.0)
 SUCCESS, UNKNOWN, FAILURE, UNTESTED = '성공', '확인필요', '실패', '미시험'
 BLOCK_MARKERS = ('웹방화벽', 'web application firewall', '차단되었습니다',
                  '접근이 거부', '접근이 차단', 'access denied', '비정상적인 접근')
@@ -272,32 +276,62 @@ class RobotsRules:
         return max(rates, key=lambda rate: rate.seconds / rate.requests) if rates else None
 
 
+def transient_get_error(exc):
+    """Retry a fresh GET after transport interruption, never a policy/TLS rejection."""
+    if isinstance(exc, urllib.error.HTTPError):
+        return False
+    if isinstance(exc, urllib.error.URLError):
+        return transient_get_error(exc.reason) if isinstance(exc.reason, Exception) else False
+    if isinstance(exc, ssl.SSLCertVerificationError):
+        return False
+    if isinstance(exc, ssl.SSLError):
+        return (isinstance(exc, ssl.SSLEOFError)
+                or getattr(exc, 'reason', None) == 'UNEXPECTED_EOF_WHILE_READING')
+    return isinstance(exc, (TimeoutError, ConnectionResetError, ConnectionAbortedError,
+                            http.client.RemoteDisconnected, http.client.IncompleteRead))
+
+
 class Client:
     def __init__(self):
         self.opener = urllib.request.build_opener(NoRedirect())
         self.robots_cache, self.last_request = {}, 0.0
+        self.request_intervals = {}
 
     def raw_get(self, url):
         parsed = urllib.parse.urlsplit(url)
         if parsed.scheme not in {'http', 'https'} or not parsed.hostname or parsed.username:
             return Response(None, url, error='지원하지 않는 URL')
-        time.sleep(max(0.0, MIN_REQUEST_INTERVAL - (time.monotonic() - self.last_request)))
-        self.last_request = time.monotonic()
-        req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT,
-                                      'Accept': '*/*', 'Accept-Language': 'ko-KR,ko;q=0.9'})
-        try:
+        origin = f'{parsed.scheme}://{parsed.netloc}'
+        for attempt in range(MAX_GET_ATTEMPTS):
+            interval = self.request_intervals.get(origin, MIN_REQUEST_INTERVAL)
+            backoff = GET_RETRY_BACKOFF[attempt - 1] if attempt else 0.0
+            # Every new connection keeps the published request interval, including retries.
+            time.sleep(max(backoff, interval - (time.monotonic() - self.last_request), 0.0))
+            self.last_request = time.monotonic()
+            req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT,
+                                          'Accept': '*/*', 'Accept-Language': 'ko-KR,ko;q=0.9'})
             try:
-                resp = self.opener.open(req, timeout=TIMEOUT_SECONDS)
-            except urllib.error.HTTPError as exc:
-                resp = exc
-            with resp:
-                headers = {k.lower(): v for k, v in resp.headers.items()}
-                raw = resp.read(MAX_BYTES + 1)
-                if len(raw) > MAX_BYTES:
-                    return Response(resp.code, url, headers, error='응답 크기 제한 초과(8 MiB)')
-                return Response(resp.code, url, headers, raw)
-        except Exception as exc:
-            return Response(None, url, error=f'{type(exc).__name__}: {exc}')
+                try:
+                    resp = self.opener.open(req, timeout=TIMEOUT_SECONDS)
+                except urllib.error.HTTPError as exc:
+                    resp = exc
+                with resp:
+                    headers = {k.lower(): v for k, v in resp.headers.items()}
+                    try:
+                        raw = resp.read(MAX_BYTES + 1)
+                    except Exception:
+                        # A 403/error page is a definitive HTTP response, even if its body breaks.
+                        if not 200 <= resp.code < 300:
+                            return Response(resp.code, url, headers)
+                        raise
+                    if len(raw) > MAX_BYTES:
+                        return Response(resp.code, url, headers, error='응답 크기 제한 초과(8 MiB)')
+                    return Response(resp.code, url, headers, raw)
+            except Exception as exc:
+                if attempt + 1 < MAX_GET_ATTEMPTS and transient_get_error(exc):
+                    continue
+                suffix = f' ({attempt + 1}회 시도)' if attempt else ''
+                return Response(None, url, error=f'{type(exc).__name__}: {exc}{suffix}')
 
     def robots_policy(self, url):
         parsed = urllib.parse.urlsplit(url)
@@ -338,6 +372,7 @@ class Client:
         rate = parser.request_rate(USER_AGENT) or parser.request_rate('*')
         interval = max(MIN_REQUEST_INTERVAL, float(delay or 0),
                        rate.seconds / rate.requests if rate and rate.requests else 0)
+        self.request_intervals[origin] = interval
         time.sleep(max(0.0, interval - (time.monotonic() - self.last_request)))
         return True, note
 
