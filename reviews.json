@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-01T05:00:01.024Z",
+  "decisions": {
+    "static:%EC%82%BC%EC%B2%99%EA%B5%90%EC%9C%A1%EB%AC%B8%ED%99%94%EA%B4%80:%EC%82%BC%EC%B2%99%EA%B5%90%EC%9C%A1%EB%AC%B8%ED%99%94%EA%B4%80%3A2026%EB%85%84%EB%B6%81book%ED%8C%8C%EC%9D%BC%EB%9F%AC%EC%9D%B4%EC%95%BC%EA%B8%B0%EC%88%98%EC%82%AC%EB%8C%80%EC%B0%B8%EA%B0%80%EC%9E%90%EB%AA%A8%EC%A7%91": {
+      "state": "approved",
+      "source_signature": "kiwoom-source-v1:{\"applicationMethod\":\"교육문화관 홈페이지 인터넷 대기자 신청\",\"applicationMode\":\"registration\",\"apply\":\"2026.09.22(화) 09:00 ~ 10.01(목) 23:59\",\"applyEndAt\":\"2026-10-01T23:59:00+09:00\",\"availability\":\"waitlist\",\"calApplyEnd\":\"2026-10-01\",\"calApplyStart\":\"2026-09-22\",\"calDate\":\"2026-10-04\",\"calEndDate\":\"2026-11-29\",\"calWeekday\":0,\"category\":\"체험학습\",\"cost\":\"원문에 참가비 안내 없음\",\"grades\":[\"초등\"],\"institution\":\"삼척교육문화관\",\"kind\":\"event\",\"location\":\"삼척교육문화관 문화교실1\",\"note\":\"일반 정원은 마감됐으며 대기자로 신청할 수 있습니다. 대기 신청이 참여 확정을 뜻하지 않습니다. 준비물: 필기도구.\",\"org\":\"삼척교육문화관\",\"period\":\"2026.10.04 ~ 11.29 매주 일요일 10:00~12:00\",\"source_kind\":\"static\",\"status\":\"대기자접수\",\"target\":\"초등학교 4~6학년\",\"title\":\"2026년「북(BOOK)파일러 이야기 수사대」 참가자 모집\",\"url\":\"https://lib.gwe.go.kr/samecc/menu/3560/lecture-event/9711\"}",
+      "checked_at": "2026-10-01T05:00:01.024Z",
+      "valid_until": "2026-10-02T09:00:00+09:00",
+      "evidenceUrl": "https://lib.gwe.go.kr/samecc/menu/3560/lecture-event/9711",
+      "evidenceNote": "2026-10-01 공식 신청페이지에 대기자접수 및 대기자신청 버튼, 행사·접수기간·초등4~6학년·인터넷 신청이 표시됨. 참가비/재료비는 -로 표시.",
+      "card": {
+        "title": "2026년「북(BOOK)파일러 이야기 수사대」 참가자 모집",
+        "org": "삼척교육문화관",
+        "category": "체험학습",
+        "grades": [
+          "초등"
+        ],
+        "period": "2026.10.04 ~ 11.29 매주 일요일 10:00~12:00",
+        "apply": "2026.09.22(화) 09:00 ~ 10.01(목) 23:59",
+        "cost": "원문에 참가비 안내 없음",
+        "capacity": "일반 접수 마감 · 대기자 접수 가능(2026-10-01 확인)",
+        "location": "삼척교육문화관 문화교실1",
+        "status": "대기자접수",
+        "calDate": "2026-10-04",
+        "calEndDate": "2026-11-29",
+        "calWeekday": 0,
+        "calApplyStart": "2026-09-22",
+        "calApplyEnd": "2026-10-01",
+        "url": "https://lib.gwe.go.kr/samecc/menu/3560/lecture-event/9711",
+        "note": "일반 정원은 마감됐으며 대기자로 신청할 수 있습니다. 대기 신청이 참여 확정을 뜻하지 않습니다. 준비물: 필기도구.",
+        "target": "초등학교 4~6학년",
+        "applicationMethod": "교육문화관 홈페이지 인터넷 대기자 신청",
+        "applicationMode": "registration",
+        "availability": "waitlist",
+        "applyEndAt": "2026-10-01T23:59:00+09:00",
+        "verified": true,
+        "applyStartAt": "2026-09-22T09:00:00+09:00",
+        "applicationUrl": "https://lib.gwe.go.kr/samecc/menu/3560/lecture-event/9711",
+        "checked_at": "2026-10-01T05:00:01.024Z"
+      }
+    },
+    "information:%EC%82%BC%EC%B2%99%EA%B5%90%EC%9C%A1%EB%AC%B8%ED%99%94%EA%B4%80:samecc-library-service": {
+      "state": "approved",
+      "source_signature": "kiwoom-source-v1:{\"apply\":\"업무종료 후·휴관일에는 현관 무인반납기 이용 가능\",\"category\":\"도서관 이용\",\"cost\":\"\",\"grades\":[\"유치원\",\"초등\",\"중등\",\"고등\",\"성인\"],\"id\":\"samecc-library-service\",\"institution\":\"삼척교육문화관\",\"kind\":\"information\",\"location\":\"삼척교육문화관\",\"note\":\"매주 월요일과 관공서 공휴일 휴관. 일요일은 개관하되 다른 공휴일과 겹치면 휴관합니다. 임시휴관은 별도 공지를 확인하세요. 무인반납기 반납처리는 다음 날 이루어집니다.\",\"org\":\"삼척교육문화관\",\"period\":\"상설 이용안내\",\"source_kind\":\"information\",\"status\":null,\"target\":\"삼척교육문화관 이용자\",\"title\":\"삼척교육문화관 정기휴관·도서반납 안내\",\"url\":\"https://lib.gwe.go.kr/samecc/menu/3584/content\"}",
+      "checked_at": "2026-10-01T05:00:01.024Z",
+      "valid_until": "2026-11-01T00:00:00+09:00",
+      "evidenceUrl": "https://lib.gwe.go.kr/samecc/menu/3584/content",
+      "evidenceNote": "2026-10-01 공식 이용서비스의 정기휴관일과 일요일 예외, 무인도서반납기 위치·이용 가능 시간대·다음날 반납처리 안내 확인.",
+      "card": {
+        "id": "samecc-library-service",
+        "title": "삼척교육문화관 정기휴관·도서반납 안내",
+        "org": "삼척교육문화관",
+        "category": "도서관 이용",
+        "grades": [
+          "유치원",
+          "초등",
+          "중등",
+          "고등",
+          "성인"
+        ],
+        "target": "삼척교육문화관 이용자",
+        "period": "상설 이용안내",
+        "apply": "업무종료 후·휴관일에는 현관 무인반납기 이용 가능",
+        "cost": "",
+        "location": "삼척교육문화관",
+        "url": "https://lib.gwe.go.kr/samecc/menu/3584/content",
+        "informationType": "standing",
+        "note": "매주 월요일과 관공서 공휴일 휴관. 일요일은 개관하되 다른 공휴일과 겹치면 휴관합니다. 임시휴관은 별도 공지를 확인하세요. 무인반납기 반납처리는 다음 날 이루어집니다.",
+        "verified": true,
+        "informationKind": "standing",
+        "currentOperationVerified": true,
+        "applicationMethod": "휴관일·업무종료 후 현관 무인도서반납기 이용",
+        "checked_at": "2026-10-01T05:00:01.024Z"
+      }
+    }
+  }
+}
