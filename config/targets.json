@@ -1,5 +1,5 @@
 {
-  "_comment": "접근·추출 시험 대상 10곳. 샘플 상세 URL 8곳, 상세 미설정 2곳, 첨부 URL 2곳. URL의 현재 유효성은 시험 결과와 원문으로 확인해야 합니다. robots.txt 규칙을 먼저 확인합니다. 상세 URL이 없거나 추정이면 미시험/확인필요로 표시합니다.",
+  "_comment": "접근·추출 시험 대상 13곳(기존 기관 10곳 + 공개 학교 게시판 3곳). 학교 설정은 2026-10-01 현재 실행 환경에서 목록·상세 샘플·robots 규칙을 확인했습니다. GitHub Actions에서도 다시 확인해야 합니다. 첫 페이지의 공고 링크·제목 변화 시험이며, 프로그램 정보 추출·모든 글 수집·자동 공개는 포함하지 않습니다. 학교 첨부 다운로드는 미시험이며 RSS 대신 HTML 게시판을 확인합니다.",
   "targets": [
     {
       "name": "삼척시청_공지사항",
@@ -117,6 +117,51 @@
       "attachment_note": "탄소중립 서포터즈 공고(notice/561) — 정확한 접수기간이 PDF 첨부에만 있어 접속 성공 시 첨부파일 링크 확보 우선순위 높음",
       "item_link_pattern": "board/notice/(\\d+)",
       "list_kind": "board"
+    },
+    {
+      "name": "삼척고등학교_공지사항",
+      "list_url": "https://samchok.gwe.hs.kr/boardCnts/list.do?boardID=24970&m=0201&s=samchokhs",
+      "sample_detail_url": "https://samchok.gwe.hs.kr/boardCnts/view.do?boardID=24970&boardSeq=9660291&lev=0&searchType=S&statusYN=W&page=1&s=samchokhs&m=0201&opType=N",
+      "expected_keyword": "지역인문실천-강원답게",
+      "attachment_url": null,
+      "attachment_note": "첨부파일 내용 및 다운로드는 이번 학교 출처 시험에서 미검증.",
+      "item_link_pattern": "boardCnts/view.do\\?[^\"']*boardSeq=(\\d+)",
+      "list_kind": "board",
+      "js_view": {
+        "onclick_pattern": "goView\\('\\d+',\\s*'(\\d+)'",
+        "url_template": "https://samchok.gwe.hs.kr/boardCnts/view.do?boardID=24970&boardSeq={seq}&lev=0&searchType=S&statusYN=W&page=1&s=samchokhs&m=0201&opType=N"
+      },
+      "sample_detail_verified": true
+    },
+    {
+      "name": "정라초등학교_가정통신문",
+      "list_url": "https://jeongra.gwe.es.kr/boardCnts/list.do?boardID=65580&m=0203&s=jeongraes",
+      "sample_detail_url": "https://jeongra.gwe.es.kr/boardCnts/view.do?boardID=65580&boardSeq=7716118&lev=0&searchType=S&statusYN=W&page=1&s=jeongraes&m=0203&opType=N",
+      "expected_keyword": "AI시대를 살아가는 우리 아이 공부력",
+      "attachment_url": null,
+      "attachment_note": "첨부파일 내용 및 다운로드는 이번 학교 출처 시험에서 미검증.",
+      "item_link_pattern": "boardCnts/view.do\\?[^\"']*boardSeq=(\\d+)",
+      "list_kind": "board",
+      "js_view": {
+        "onclick_pattern": "goView\\('\\d+',\\s*'(\\d+)'",
+        "url_template": "https://jeongra.gwe.es.kr/boardCnts/view.do?boardID=65580&boardSeq={seq}&lev=0&searchType=S&statusYN=W&page=1&s=jeongraes&m=0203&opType=N"
+      },
+      "sample_detail_verified": true
+    },
+    {
+      "name": "삼척초등학교_공지사항",
+      "list_url": "https://samcheok.gwe.es.kr/boardCnts/list.do?boardID=37778&m=0201&s=samcheokes",
+      "sample_detail_url": "https://samcheok.gwe.es.kr/boardCnts/view.do?boardID=37778&boardSeq=9669994&lev=0&searchType=S&statusYN=W&page=1&s=samcheokes&m=0201&opType=N",
+      "expected_keyword": "2026 삼척 독서캠프",
+      "attachment_url": null,
+      "attachment_note": "첨부파일 내용 및 다운로드는 이번 학교 출처 시험에서 미검증.",
+      "item_link_pattern": "boardCnts/view.do\\?[^\"']*boardSeq=(\\d+)",
+      "list_kind": "board",
+      "js_view": {
+        "onclick_pattern": "goView\\('\\d+',\\s*'(\\d+)'",
+        "url_template": "https://samcheok.gwe.es.kr/boardCnts/view.do?boardID=37778&boardSeq={seq}&lev=0&searchType=S&statusYN=W&page=1&s=samcheokes&m=0201&opType=N"
+      },
+      "sample_detail_verified": true
     }
   ]
 }
