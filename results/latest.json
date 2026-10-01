@@ -1,7 +1,7 @@
 [
   {
     "name": "삼척시청_공지사항",
-    "checked_at": "2026-10-01T04:43:40.076215+00:00",
+    "checked_at": "2026-10-01T23:54:25.713271+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://www.samcheok.go.kr/media/00083/00089.web?gcode=1002",
     "changes": {
@@ -33,7 +33,7 @@
   },
   {
     "name": "EDUPIA_프로그램신청",
-    "checked_at": "2026-10-01T04:43:41.032413+00:00",
+    "checked_at": "2026-10-01T23:54:26.490725+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://edupiasamcheok.kr/prgm/list.do",
     "changes": {
@@ -65,7 +65,7 @@
   },
   {
     "name": "삼척시청소년수련관_공지사항",
-    "checked_at": "2026-10-01T04:43:42.505912+00:00",
+    "checked_at": "2026-10-01T23:54:27.885525+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://youth.samcheok.go.kr/youth/sub/Notice.php",
     "changes": {
@@ -104,7 +104,7 @@
   },
   {
     "name": "근덕청소년문화의집_공지사항",
-    "checked_at": "2026-10-01T04:43:48.662511+00:00",
+    "checked_at": "2026-10-01T23:54:34.147770+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://wdyouth.samcheok.go.kr/wdyouth/sub/Notice.php",
     "changes": {
@@ -118,7 +118,7 @@
       "note": "공고 링크 10건 추출(페이지네이션/누락 여부 미검증)",
       "status_code": 200,
       "final_url": "https://wdyouth.samcheok.go.kr/wdyouth/sub/Notice.php",
-      "bytes": 34476,
+      "bytes": 34478,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -133,7 +133,7 @@
   },
   {
     "name": "도계청소년장학센터_공지사항",
-    "checked_at": "2026-10-01T04:43:51.519625+00:00",
+    "checked_at": "2026-10-01T23:54:37.045309+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://dgyouth.samcheok.go.kr/dgyouth/sub/Notice.php",
     "changes": {
@@ -162,7 +162,7 @@
   },
   {
     "name": "강원특별자치도삼척교육지원청_공지사항",
-    "checked_at": "2026-10-01T04:43:54.431661+00:00",
+    "checked_at": "2026-10-01T23:54:40.138259+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://sce.gwe.go.kr/boardCnts/list.do?boardID=1595&m=0301&s=kwsche",
     "changes": {
@@ -176,7 +176,7 @@
       "note": "공고 링크 10건 추출(페이지네이션/누락 여부 미검증)",
       "status_code": 200,
       "final_url": "https://sce.gwe.go.kr/boardCnts/list.do?boardID=1595&m=0301&s=kwsche",
-      "bytes": 89706,
+      "bytes": 89707,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -185,7 +185,7 @@
       "note": "샘플 본문의 기대 문구 확인(공유재산); 날짜/대상 필드 추출은 미시험",
       "status_code": 200,
       "final_url": "https://sce.gwe.go.kr/boardCnts/view.do?boardID=1595&boardSeq=7715223&lev=0&searchType=null&statusYN=W&page=1&s=kwsche&m=0301&opType=N",
-      "bytes": 76918,
+      "bytes": 76917,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -201,7 +201,7 @@
   },
   {
     "name": "삼척관광문화재단_공지",
-    "checked_at": "2026-10-01T04:44:04.836710+00:00",
+    "checked_at": "2026-10-01T23:54:48.024625+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://www.stcf.or.kr/01298/01315.web",
     "changes": {
@@ -235,7 +235,7 @@
   },
   {
     "name": "삼척도계도시재생현장지원센터_공지",
-    "checked_at": "2026-10-01T04:44:10.539903+00:00",
+    "checked_at": "2026-10-01T23:54:53.556351+00:00",
     "environment": "GitHub Actions",
     "list_url": "http://durc.or.kr/sub/sub03_01.php",
     "changes": {
@@ -269,7 +269,7 @@
   },
   {
     "name": "삼척교육문화관",
-    "checked_at": "2026-10-01T04:44:14.321382+00:00",
+    "checked_at": "2026-10-01T23:54:57.260178+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://lib.gwe.go.kr/samecc/main",
     "changes": {
@@ -282,7 +282,7 @@
       "note": "메인 화면만 시험; 발견 링크 0건으로 목록 전체 미검증",
       "status_code": 200,
       "final_url": "https://lib.gwe.go.kr/samecc/main",
-      "bytes": 106083,
+      "bytes": 105134,
       "content_type": "text/html;charset=UTF-8",
       "error": null
     },
@@ -291,7 +291,7 @@
       "note": "샘플 본문의 기대 문구 확인(북(BOOK)파일러); 날짜/대상 필드 추출은 미시험",
       "status_code": 200,
       "final_url": "https://lib.gwe.go.kr/samecc/menu/3560/lecture-event/9711",
-      "bytes": 88456,
+      "bytes": 86137,
       "content_type": "text/html;charset=UTF-8",
       "error": null
     },
@@ -302,7 +302,7 @@
   },
   {
     "name": "삼척시탄소중립지원센터",
-    "checked_at": "2026-10-01T04:44:19.939693+00:00",
+    "checked_at": "2026-10-01T23:55:02.765620+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://sc-cnsc.kangwon.ac.kr/board/notice",
     "changes": {
@@ -316,7 +316,7 @@
       "note": "공고 링크 20건 추출(페이지네이션/누락 여부 미검증)",
       "status_code": 200,
       "final_url": "https://sc-cnsc.kangwon.ac.kr/board/notice",
-      "bytes": 35837,
+      "bytes": 35833,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -325,7 +325,7 @@
       "note": "대조할 본문 문구 없음: 실제 공고 여부 미검증",
       "status_code": 200,
       "final_url": "https://sc-cnsc.kangwon.ac.kr/board/notice/561",
-      "bytes": 23067,
+      "bytes": 23068,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -336,7 +336,7 @@
   },
   {
     "name": "삼척고등학교_공지사항",
-    "checked_at": "2026-10-01T04:44:23.907697+00:00",
+    "checked_at": "2026-10-01T23:55:06.790087+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://samchok.gwe.hs.kr/boardCnts/list.do?boardID=24970&m=0201&s=samchokhs",
     "changes": {
@@ -359,7 +359,7 @@
       "note": "샘플 본문의 기대 문구 확인(지역인문실천-강원답게); 날짜/대상 필드 추출은 미시험",
       "status_code": 200,
       "final_url": "https://samchok.gwe.hs.kr/boardCnts/view.do?boardID=24970&boardSeq=9660291&lev=0&searchType=S&statusYN=W&page=1&s=samchokhs&m=0201&opType=N",
-      "bytes": 49180,
+      "bytes": 49179,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -370,7 +370,7 @@
   },
   {
     "name": "정라초등학교_가정통신문",
-    "checked_at": "2026-10-01T04:44:32.942195+00:00",
+    "checked_at": "2026-10-01T23:55:13.774457+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://jeongra.gwe.es.kr/boardCnts/list.do?boardID=65580&m=0203&s=jeongraes",
     "changes": {
@@ -384,7 +384,7 @@
       "note": "공고 링크 10건 추출(페이지네이션/누락 여부 미검증)",
       "status_code": 200,
       "final_url": "https://jeongra.gwe.es.kr/boardCnts/list.do?boardID=65580&m=0203&s=jeongraes",
-      "bytes": 64749,
+      "bytes": 64750,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -393,7 +393,7 @@
       "note": "샘플 본문의 기대 문구 확인(AI시대를 살아가는 우리 아이 공부력); 날짜/대상 필드 추출은 미시험",
       "status_code": 200,
       "final_url": "https://jeongra.gwe.es.kr/boardCnts/view.do?boardID=65580&boardSeq=7716118&lev=0&searchType=S&statusYN=W&page=1&s=jeongraes&m=0203&opType=N",
-      "bytes": 50949,
+      "bytes": 50948,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -404,7 +404,7 @@
   },
   {
     "name": "삼척초등학교_공지사항",
-    "checked_at": "2026-10-01T04:44:37.282717+00:00",
+    "checked_at": "2026-10-01T23:55:18.954729+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://samcheok.gwe.es.kr/boardCnts/list.do?boardID=37778&m=0201&s=samcheokes",
     "changes": {
@@ -427,7 +427,7 @@
       "note": "샘플 본문의 기대 문구 확인(2026 삼척 독서캠프); 날짜/대상 필드 추출은 미시험",
       "status_code": 200,
       "final_url": "https://samcheok.gwe.es.kr/boardCnts/view.do?boardID=37778&boardSeq=9669994&lev=0&searchType=S&statusYN=W&page=1&s=samcheokes&m=0201&opType=N",
-      "bytes": 58940,
+      "bytes": 58939,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
