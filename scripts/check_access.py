@@ -26,6 +26,81 @@ MIN_REQUEST_INTERVAL = 1.5
 SUCCESS, UNKNOWN, FAILURE, UNTESTED = '성공', '확인필요', '실패', '미시험'
 BLOCK_MARKERS = ('웹방화벽', 'web application firewall', '차단되었습니다',
                  '접근이 거부', '접근이 차단', 'access denied', '비정상적인 접근')
+# 제목의 inline 태그 경계는 제목을 끊는 경계가 아니다. 알려진 제목
+# 컨테이너가 있으면 그 안의 모든 텍스트를 합치고, 없으면 앵커 안에서
+# 명시적인 배지/날짜/조회수 같은 메타정보만 제외한다.
+NON_TITLE_CHUNK = re.compile(
+    r'^\[(공지|알림|안내|NEW|N)\]$'
+    r'|^\d{4}[.\-]\s*\d{1,2}[.\-]\s*\d{1,2}\.?$'
+    r'|^(조회수?|작성일|등록일|이름|작성자|번호)\s*[:：]\s*\S.*$'
+)
+TITLE_CLASSES = {'title', 'tit', 'subject', 'bbs_title', 'bbs_tit',
+                 'board_title', 'notice_title', 'list_title', 'title_wrap'}
+META_CLASSES = {'date', 'datetime', 'regdate', 'reg_date', 'writer', 'author',
+                'hit', 'hits', 'view_count', 'views', 'num', 'number', 'badge',
+                'label', 'new', 'icon', 'sr-only', 'rowinfo'}
+TITLE_TAGS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
+VOID_TAGS = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
+             'link', 'meta', 'param', 'source', 'track', 'wbr'}
+
+
+def node_classes(node):
+    return set(node.get('attrs', {}).get('class', '').lower().split())
+
+
+def is_title_node(node):
+    classes = node_classes(node)
+    return bool(classes & TITLE_CLASSES or node.get('tag') in TITLE_TAGS
+                or (node.get('tag') == 'strong' and 't1' in classes))
+
+
+def node_text(node, skip_metadata=True):
+    if isinstance(node, str):
+        return node
+    classes = node_classes(node)
+    is_title = is_title_node(node)
+    if skip_metadata and ((classes & META_CLASSES and not is_title) or 'hidden' in node.get('attrs', {})):
+        return ''
+    if skip_metadata and node.get('tag') == 'em':
+        caption = ' '.join(''.join(node_text(child, False) for child in node['children']).split())
+        if caption.startswith('[') and NON_TITLE_CHUNK.fullmatch(caption):
+            return ''
+    return ''.join(node_text(child, skip_metadata) for child in node['children'])
+
+
+def title_nodes(node):
+    if isinstance(node, str):
+        return []
+    if is_title_node(node):
+        return [node]
+    if node_classes(node) & META_CLASSES:
+        return []
+    return [found for child in node['children'] for found in title_nodes(child)]
+
+
+def pick_title(chunks, anchor_node=None):
+    if anchor_node is not None:
+        for node in title_nodes(anchor_node):
+            title = ' '.join(node_text(node).split())
+            if title:
+                return title
+        kept = []
+        for node in anchor_node['children']:
+            value = node_text(node)
+            cleaned = ' '.join(value.split())
+            if not cleaned:
+                kept.append(value)
+                continue
+            if NON_TITLE_CHUNK.match(cleaned):
+                # A date/view-count field marks the end of an unlabelled
+                # board-row title; a leading badge is just skipped.
+                if any(part.strip() for part in kept) and not cleaned.startswith('['):
+                    break
+                continue
+            kept.append(value)
+        return ' '.join(''.join(kept).split())
+    return ' '.join(chunk.strip() for chunk in chunks
+                    if chunk.strip() and not NON_TITLE_CHUNK.match(chunk.strip()))
 
 
 @dataclass
@@ -54,6 +129,7 @@ class Page(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.links, self.parts, self.hidden = [], [], []
         self.anchor = None
+        self.anchor_nodes = []
         self.feed(html)
 
     def handle_starttag(self, tag, attrs):
@@ -63,10 +139,20 @@ class Page(HTMLParser):
             return
         if self.hidden:
             return
-        if tag == 'a' and values.get('href'):
-            self.anchor = [values['href'], []]
+        if tag == 'a' and (values.get('href') or values.get('onclick')):
+            # href가 'javascript:'뿐인 JS 팝업형 링크도 onclick을 들고 다니면서
+            # 제목 조각을 계속 모으고, find_items에서 href/onclick을 둘 다 시도한다.
+            self.anchor = [values.get('href') or '', values.get('onclick') or '', []]
+            self.anchor_nodes = [{'tag': 'a', 'attrs': values, 'children': []}]
+        elif self.anchor:
+            node = {'tag': tag, 'attrs': values, 'children': []}
+            self.anchor_nodes[-1]['children'].append(node)
+            if tag not in VOID_TAGS:
+                self.anchor_nodes.append(node)
         if tag == 'br':
             self.parts.append(' ')
+            if self.anchor:
+                self.anchor_nodes[-1]['children'].append(' ')
 
     def handle_endtag(self, tag):
         if self.hidden:
@@ -74,15 +160,24 @@ class Page(HTMLParser):
                 del self.hidden[self.hidden.index(tag):]
             return
         if tag == 'a' and self.anchor:
-            self.links.append((self.anchor[0], ' '.join(self.anchor[1]).strip()))
+            self.links.append((self.anchor[0], self.anchor[1],
+                               pick_title(self.anchor[2], self.anchor_nodes[0])))
             self.anchor = None
+            self.anchor_nodes = []
+        elif self.anchor and tag not in VOID_TAGS:
+            for index in range(len(self.anchor_nodes) - 1, 0, -1):
+                if self.anchor_nodes[index]['tag'] == tag:
+                    del self.anchor_nodes[index:]
+                    break
         self.parts.append(' ')
 
     def handle_data(self, value):
+        if not self.hidden and self.anchor:
+            self.anchor_nodes[-1]['children'].append(value)
         if not self.hidden and value.strip():
             self.parts.append(value.strip())
             if self.anchor:
-                self.anchor[1].append(value.strip())
+                self.anchor[2].append(value.strip())
 
     @property
     def text(self):
@@ -92,6 +187,89 @@ class Page(HTMLParser):
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, *args):
         return None
+
+
+class RobotsRules:
+    """RFC 9309 path matching plus conservative crawl-delay/rate handling."""
+    def __init__(self):
+        self.groups = []
+
+    def parse(self, lines):
+        self.groups = []
+        group, directives = None, False
+        for line in lines:
+            line = line.split('#', 1)[0].strip()
+            if ':' not in line:
+                continue
+            key, value = (part.strip() for part in line.split(':', 1))
+            key = key.lower()
+            if key == 'user-agent':
+                if group is None or directives:
+                    group = {'agents': [], 'rules': [], 'delays': [], 'rates': []}
+                    self.groups.append(group)
+                    directives = False
+                group['agents'].append(value.lower())
+            elif group is not None:
+                directives = True
+                if key in {'allow', 'disallow'} and value:
+                    group['rules'].append((value, key == 'allow'))
+                elif key == 'crawl-delay':
+                    try:
+                        delay = float(value)
+                        if delay >= 0 and delay != float('inf'):
+                            group['delays'].append(delay)
+                    except ValueError:
+                        pass
+                elif key == 'request-rate':
+                    match = re.fullmatch(r'(\d+)\s*/\s*(\d+)', value)
+                    if match and int(match[1]) and int(match[2]):
+                        group['rates'].append(urllib.robotparser.RequestRate(int(match[1]), int(match[2])))
+
+    def matching_groups(self, user_agent):
+        token = user_agent.split('/', 1)[0].lower()
+        specific = [group for group in self.groups if token in group['agents']]
+        return specific or [group for group in self.groups if '*' in group['agents']]
+
+    @staticmethod
+    def normalized_path(value):
+        # Decode only percent-encoded unreserved ASCII; reserved characters
+        # such as encoded slashes retain their distinct spelling.
+        value = urllib.parse.quote(value, safe="/%?&=:+$;,!@[]()*'")
+        def normalize(match):
+            number = int(match[0][1:], 16)
+            char = chr(number)
+            if char.isascii() and (char.isalnum() or char in '-._~'):
+                return char
+            return '%' + match[0][1:].upper()
+        return re.sub(r'%[0-9a-fA-F]{2}', normalize, value)
+
+    def can_fetch(self, user_agent, url):
+        parsed = urllib.parse.urlsplit(url)
+        path = self.normalized_path((parsed.path or '/') + ('?' + parsed.query if parsed.query else ''))
+        if parsed.path == '/robots.txt':
+            return True
+        matches = []
+        for group in self.matching_groups(user_agent):
+            for raw_pattern, allowed in group['rules']:
+                pattern = self.normalized_path(raw_pattern)
+                terminal = pattern.endswith('$')
+                if terminal:
+                    pattern = pattern[:-1]
+                regex = '^' + '.*'.join(re.escape(part) for part in pattern.split('*'))
+                if terminal:
+                    regex += '$'
+                if re.search(regex, path):
+                    specificity = len(pattern.replace('*', '').encode('utf-8'))
+                    matches.append((specificity, allowed))
+        return max(matches)[1] if matches else True
+
+    def crawl_delay(self, user_agent):
+        delays = [delay for group in self.matching_groups(user_agent) for delay in group['delays']]
+        return max(delays) if delays else None
+
+    def request_rate(self, user_agent):
+        rates = [rate for group in self.matching_groups(user_agent) for rate in group['rates']]
+        return max(rates, key=lambda rate: rate.seconds / rate.requests) if rates else None
 
 
 class Client:
@@ -139,13 +317,13 @@ class Client:
             if resp.error:
                 entry = (None, 'robots.txt 확인 실패: ' + resp.error)
             elif resp.status in {404, 410}:
-                parser = urllib.robotparser.RobotFileParser()
+                parser = RobotsRules()
                 parser.parse([])
                 entry = (parser, 'robots.txt 없음(404/410)')
             elif (resp.status == 200 and '<html' not in text.lower() and '<!doctype' not in text.lower()
                   and (not any(line.strip() and not line.lstrip().startswith('#') for line in text.splitlines())
                        or re.search(r'^\s*(?:User-agent|Allow|Disallow|Sitemap|Host|Crawl-delay|Request-rate)\s*:', text, re.I | re.M))):
-                parser = urllib.robotparser.RobotFileParser()
+                parser = RobotsRules()
                 parser.parse(text.splitlines())
                 entry = (parser, 'robots.txt 확인')
             else:
@@ -214,10 +392,14 @@ def metadata(resp, verdict, note):
 
 def find_items(page, target, url):
     pattern = re.compile(target['item_link_pattern'])
+    js_view = target.get('js_view')
+    js_pattern = re.compile(js_view['onclick_pattern']) if js_view else None
     found = {}
-    for href, title in page.links:
+    for href, onclick, title in page.links:
+        if not title:
+            continue
         match = pattern.search(href)
-        if match and title:
+        if match:
             full_url = urllib.parse.urljoin(url, href)
             if urllib.parse.urlsplit(full_url).scheme not in {'http', 'https'}:
                 continue
@@ -226,6 +408,14 @@ def find_items(page, target, url):
                    for key, value in target.get('item_required_query', {}).items()):
                 continue
             found[match.group(1)] = {'title': title, 'url': full_url}
+            continue
+        # href가 'javascript:...'뿐이라 실제 주소를 담지 못하는 게시판(교육지원청 등)은
+        # onclick의 게시글 번호를 읽어 상세주소 형식(js_view.url_template)으로 직접 조립한다.
+        if js_pattern and onclick:
+            js_match = js_pattern.search(onclick)
+            if js_match:
+                full_url = js_view['url_template'].format(seq=js_match.group(1))
+                found[js_match.group(1)] = {'title': title, 'url': full_url}
     return found
 
 
