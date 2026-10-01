@@ -1,5 +1,5 @@
 {
-  "_comment": "접근·추출 시험 대상 10곳. 기존 제공 URL의 실제 유효성은 시험 결과와 원문으로 확인해야 합니다. robots.txt 규칙을 먼저 확인합니다. 상세 URL이 없거나 추정이면 미시험/확인필요로 표시합니다. 첨부 URL은 현재 모두 미설정입니다.",
+  "_comment": "접근·추출 시험 대상 10곳. 샘플 상세 URL 8곳, 상세 미설정 2곳, 첨부 URL 2곳. URL의 현재 유효성은 시험 결과와 원문으로 확인해야 합니다. robots.txt 규칙을 먼저 확인합니다. 상세 URL이 없거나 추정이면 미시험/확인필요로 표시합니다.",
   "targets": [
     {
       "name": "삼척시청_공지사항",
@@ -24,15 +24,16 @@
     {
       "name": "삼척시청소년수련관_공지사항",
       "list_url": "https://youth.samcheok.go.kr/youth/sub/Notice.php",
-      "sample_detail_url": null,
-      "expected_keyword": null,
-      "attachment_url": null,
-      "attachment_note": "샘플 공고 URL 미확보 — list_url 접근 가능 여부만 우선 확인",
+      "sample_detail_url": "https://youth.samcheok.go.kr/youth/sub/Notice.php?code=yu_notice&page=1&bbsData=bm89MzUw||&search=&searchstring=&mode=view",
+      "expected_keyword": "삼척시청소년어울림마당",
+      "attachment_url": "https://youth.samcheok.go.kr/youth/board/bbs_download.php?code=yu_notice&no=350&sd=../bbsDown/yu_notice&dn=1&fn=1",
+      "attachment_note": "실제 첨부(2026_어울림마당_공연&체험부스_참가신청서.hwp) 다운로드 링크로 확인됨(2026-09-30). 이 공고 자체는 접수기간이 지나면 교체될 수 있어, 계속 성공으로 나오는지 며칠 지켜볼 것.",
       "item_link_pattern": "bbsData=([^&]+)",
       "list_kind": "board",
       "item_required_query": {
         "mode": "view"
-      }
+      },
+      "sample_detail_verified": true
     },
     {
       "name": "근덕청소년문화의집_공지사항",
@@ -63,23 +64,28 @@
     {
       "name": "강원특별자치도삼척교육지원청_공지사항",
       "list_url": "https://sce.gwe.go.kr/boardCnts/list.do?boardID=1595&m=0301&s=kwsche",
-      "sample_detail_url": null,
-      "expected_keyword": null,
-      "attachment_url": null,
-      "attachment_note": "상세페이지가 JS 팝업 링크라 세션 내에서 직접 URL을 특정하지 못함 — list_url 접근 가능 여부만 우선 확인",
+      "sample_detail_url": "https://sce.gwe.go.kr/boardCnts/view.do?boardID=1595&boardSeq=7715223&lev=0&searchType=null&statusYN=W&page=1&s=kwsche&m=0301&opType=N",
+      "expected_keyword": "공유재산",
+      "attachment_url": "https://sce.gwe.go.kr/boardCnts/fileDown.do?m=0301&s=kwsche&fileSeq=08c3951bf468c32e3f6198eefb01cfdb",
+      "attachment_note": "실제 게시글의 상세주소는 href가 아니라 onclick의 goView('1595','보드번호',...) 안에만 있음 — js_view로 해석. 첨부는 fileDown.do?fileSeq=... 형태로 확인됨(2026-09-30).",
       "item_link_pattern": "boardCnts/view.do\\?[^\"']*boardSeq=(\\d+)",
-      "list_kind": "board"
+      "list_kind": "board",
+      "js_view": {
+        "onclick_pattern": "goView\\('\\d+',\\s*'(\\d+)'",
+        "url_template": "https://sce.gwe.go.kr/boardCnts/view.do?boardID=1595&boardSeq={seq}&lev=0&searchType=null&statusYN=W&page=1&s=kwsche&m=0301&opType=N"
+      },
+      "sample_detail_verified": true
     },
     {
       "name": "삼척관광문화재단_공지",
-      "list_url": "https://www.stcf.or.kr/01296/01371.web",
-      "sample_detail_url": "https://www.stcf.or.kr/01296/01371/01373.web",
-      "expected_keyword": null,
+      "list_url": "https://www.stcf.or.kr/01298/01315.web",
+      "sample_detail_url": "https://www.stcf.or.kr/01298/01315.web?gcode=1001&idx=1035&amode=view&",
+      "expected_keyword": "관광동행 포럼",
       "attachment_url": null,
-      "attachment_note": "sample_detail_url은 '삼척 국가유산 야행' 공고로 추정되는 경로 — 실제 idx 파라미터가 필요할 수 있으니 접속 성공 시 URL 구조 재확인 필요",
+      "attachment_note": "이전 주소(01296/01371.web)는 실제로는 '축제소개' 페이지로 리다이렉트되어 공지사항이 아니었음 — 2026-09-30 확인한 실제 공지사항 게시판 주소로 교체.",
       "item_link_pattern": "idx=(\\d+)",
       "list_kind": "board",
-      "sample_detail_verified": false
+      "sample_detail_verified": true
     },
     {
       "name": "삼척도계도시재생현장지원센터_공지",
