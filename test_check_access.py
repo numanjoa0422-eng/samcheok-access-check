@@ -1,9 +1,12 @@
 import importlib.util
+import http.client
+import io
 import json
+import ssl
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location('checker', ROOT / 'scripts/check_access.py')
@@ -255,6 +258,142 @@ class RegressionTests(unittest.TestCase):
             self.assertEqual(len(results), 2)
             self.assertEqual(results[0]['list']['verdict'], c.UNKNOWN)
             self.assertEqual(results[1]['list']['verdict'], c.SUCCESS)
+
+
+class WireResponse:
+    def __init__(self, code=200, body=b'body', headers=None, read_error=None):
+        self.code, self.body, self.headers = code, body, headers or {}
+        self.read_error, self.closed = read_error, False
+    def read(self, _limit):
+        if self.read_error:
+            raise self.read_error
+        return self.body
+    def __enter__(self):
+        return self
+    def __exit__(self, *_args):
+        self.closed = True
+
+
+class RetryTests(unittest.TestCase):
+    def setUp(self):
+        self.clock = 100.0
+        self.sleeps = []
+        def sleep(seconds):
+            self.sleeps.append(seconds)
+            self.clock += seconds
+        self.sleep_patch = patch.object(c.time, 'sleep', side_effect=sleep)
+        self.monotonic_patch = patch.object(c.time, 'monotonic', side_effect=lambda: self.clock)
+        self.sleep_patch.start()
+        self.monotonic_patch.start()
+        self.addCleanup(self.sleep_patch.stop)
+        self.addCleanup(self.monotonic_patch.stop)
+        self.client = c.Client()
+        self.client.opener = Mock()
+        self.url = 'https://school.test/detail'
+    def eof(self):
+        return ssl.SSLEOFError(8, 'EOF occurred in violation of protocol')
+    def test_wrapped_ssl_eof_recovers_on_new_request(self):
+        self.client.opener.open.side_effect = [c.urllib.error.URLError(self.eof()), WireResponse()]
+        response = self.client.raw_get(self.url)
+        self.assertEqual(response.raw, b'body')
+        calls = self.client.opener.open.call_args_list
+        self.assertEqual(len(calls), 2)
+        self.assertIsNot(calls[0].args[0], calls[1].args[0])
+        self.assertTrue(all(call.args[0].full_url == self.url for call in calls))
+        self.assertTrue(all(call.kwargs['timeout'] == c.TIMEOUT_SECONDS for call in calls))
+    def test_persistent_ssl_eof_stops_after_three_attempts(self):
+        self.client.opener.open.side_effect = [self.eof(), self.eof(), self.eof()]
+        response = self.client.raw_get(self.url)
+        self.assertEqual(self.client.opener.open.call_count, 3)
+        self.assertIsNone(response.status)
+        self.assertIn('3회 시도', response.error)
+    def test_ssl_named_eof_is_retryable_but_other_ssl_errors_are_not(self):
+        named_eof = ssl.SSLError(1, 'unexpected EOF')
+        named_eof.reason = 'UNEXPECTED_EOF_WHILE_READING'
+        self.assertTrue(c.transient_get_error(named_eof))
+        self.assertFalse(c.transient_get_error(ssl.SSLError(1, 'wrong version number')))
+    def test_certificate_validation_failure_stops_without_retry(self):
+        error = c.urllib.error.URLError(ssl.SSLCertVerificationError(1, 'certificate verify failed'))
+        self.client.opener.open.side_effect = error
+        response = self.client.raw_get(self.url)
+        self.assertIsNone(response.status)
+        self.assertEqual(self.client.opener.open.call_count, 1)
+    def test_unknown_url_error_stops_without_retry(self):
+        self.client.opener.open.side_effect = c.urllib.error.URLError('access denied by proxy')
+        self.client.raw_get(self.url)
+        self.assertEqual(self.client.opener.open.call_count, 1)
+    def test_interrupted_get_and_body_can_retry(self):
+        for error in (TimeoutError('timed out'), ConnectionResetError('reset'),
+                      ConnectionAbortedError('aborted'), http.client.RemoteDisconnected('closed'),
+                      http.client.IncompleteRead(b'part', 10)):
+            with self.subTest(error=type(error).__name__):
+                self.client.opener.open.reset_mock()
+                self.client.opener.open.side_effect = [error, WireResponse()]
+                self.assertEqual(self.client.raw_get(self.url).raw, b'body')
+                self.assertEqual(self.client.opener.open.call_count, 2)
+        broken = WireResponse(read_error=http.client.IncompleteRead(b'part', 10))
+        self.client.opener.open.side_effect = [broken, WireResponse()]
+        self.assertEqual(self.client.raw_get(self.url).raw, b'body')
+        self.assertTrue(broken.closed)
+    def test_http_403_stops_without_retry(self):
+        error = c.urllib.error.HTTPError(self.url, 403, 'Forbidden', {}, io.BytesIO(b'denied'))
+        self.client.opener.open.side_effect = error
+        response = self.client.raw_get(self.url)
+        self.assertEqual(response.status, 403)
+        self.assertEqual(self.client.opener.open.call_count, 1)
+    def test_broken_error_body_does_not_trigger_retry(self):
+        self.client.opener.open.return_value = WireResponse(code=403, read_error=self.eof())
+        self.assertEqual(self.client.raw_get(self.url).status, 403)
+        self.assertEqual(self.client.opener.open.call_count, 1)
+    def test_oversized_response_does_not_trigger_retry(self):
+        with patch.object(c, 'MAX_BYTES', 8):
+            self.client.opener.open.return_value = WireResponse(body=b'123456789')
+            self.assertIn('크기 제한', self.client.raw_get(self.url).error)
+            self.assertEqual(self.client.opener.open.call_count, 1)
+    def test_robots_disallow_prevents_content_request(self):
+        self.client.opener.open.return_value = WireResponse(body=b'User-agent: *\nDisallow: /\n')
+        response = self.client.fetch(self.url)
+        self.assertTrue(response.policy.startswith('제한:'))
+        self.assertEqual(self.client.opener.open.call_count, 1)
+        self.assertTrue(self.client.opener.open.call_args.args[0].full_url.endswith('/robots.txt'))
+    def test_robots_transport_failure_is_bounded_and_holds_content(self):
+        self.client.opener.open.side_effect = [self.eof(), self.eof(), self.eof()]
+        response = self.client.fetch(self.url)
+        self.assertTrue(response.policy.startswith('보류:'))
+        self.assertEqual(self.client.opener.open.call_count, 3)
+        self.assertTrue(all(call.args[0].full_url.endswith('/robots.txt')
+                            for call in self.client.opener.open.call_args_list))
+    def test_redirect_destination_must_pass_its_own_robots(self):
+        self.client.opener.open.side_effect = [
+            WireResponse(body=b'User-agent: *\nAllow: /\n'),
+            WireResponse(code=302, headers={'Location': 'https://blocked.test/detail'}),
+            WireResponse(body=b'User-agent: *\nDisallow: /\n')]
+        response = self.client.fetch(self.url)
+        self.assertTrue(response.policy.startswith('제한:'))
+        self.assertEqual([call.args[0].full_url for call in self.client.opener.open.call_args_list],
+                         ['https://school.test/robots.txt', self.url, 'https://blocked.test/robots.txt'])
+    def test_retries_keep_robots_crawl_delay(self):
+        started = []
+        responses = iter([WireResponse(body=b'User-agent: *\nAllow: /\nCrawl-delay: 10\n'),
+                          self.eof(), WireResponse()])
+        def open_request(req, **_kwargs):
+            started.append((req.full_url, self.clock))
+            response = next(responses)
+            if isinstance(response, Exception):
+                raise response
+            return response
+        self.client.opener.open.side_effect = open_request
+        self.assertEqual(self.client.fetch(self.url).raw, b'body')
+        self.assertGreaterEqual(started[1][1] - started[0][1], 10)
+        self.assertGreaterEqual(started[2][1] - started[1][1], 10)
+    def test_default_tls_handler_is_kept(self):
+        client = c.Client()
+        https_handlers = [handler for handler in client.opener.handlers
+                          if isinstance(handler, c.urllib.request.HTTPSHandler)]
+        self.assertEqual(len(https_handlers), 1)
+        context = https_handlers[0]._context or ssl.create_default_context()
+        self.assertEqual(context.verify_mode, ssl.CERT_REQUIRED)
+        self.assertTrue(context.check_hostname)
 
 
 if __name__ == '__main__':
