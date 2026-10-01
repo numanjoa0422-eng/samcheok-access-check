@@ -1,4 +1,4 @@
-# 삼척 키움지도 — 접근·추출 시험 (2026-10-01T10:01:54.875575+09:00, KST)
+# 삼척 키움지도 — 접근·추출 시험 (2026-10-01T10:37:15.005218+09:00, KST)
 
 실행 완료와 사이트 수집 성공은 다릅니다. 성공은 해당 칸의 제한된 시험만 통과했다는 뜻입니다.
 본문의 일정 변경, 모든 공고의 누락 여부, 첨부 내용 추출은 이 도구로 검증하지 않습니다.
@@ -15,15 +15,15 @@
 | 삼척도계도시재생현장지원센터_공지 | 성공 | 확인필요 | 미시험 | 비교 완료(0건) |
 | 삼척교육문화관 | 확인필요 | 성공 | 미시험 | 미검증 |
 | 삼척시탄소중립지원센터 | 성공 | 확인필요 | 미시험 | 비교 완료(0건) |
-| 삼척고등학교_공지사항 | 성공 | 실패 | 미시험 | 기준 생성 |
-| 정라초등학교_가정통신문 | 성공 | 성공 | 미시험 | 기준 생성 |
-| 삼척초등학교_공지사항 | 성공 | 성공 | 미시험 | 기준 생성 |
+| 삼척고등학교_공지사항 | 성공 | 성공 | 미시험 | 비교 완료(0건) |
+| 정라초등학교_가정통신문 | 성공 | 성공 | 미시험 | 비교 완료(0건) |
+| 삼척초등학교_공지사항 | 성공 | 성공 | 미시험 | 비교 완료(0건) |
 
 ## 삼척시청_공지사항
-- 목록: 확인필요 — 보류: robots.txt 확인 실패: URLError: <urlopen error timed out>
+- 목록: 확인필요 — 보류: robots.txt 규칙 확인 불가(HTTP 200)
   - 최종 URL: https://www.samcheok.go.kr/media/00083/00089.web?gcode=1002
   - HTTP None, 0 bytes
-- 상세: 확인필요 — 보류: robots.txt 확인 실패: URLError: <urlopen error timed out>
+- 상세: 확인필요 — 보류: robots.txt 규칙 확인 불가(HTTP 200)
   - 최종 URL: https://www.samcheok.go.kr/media/00083/00089.web?gcode=1002&idx=143459&amode=view&
   - HTTP None, 0 bytes
 - 첨부: 미시험 — 첨부 URL 없음
@@ -68,7 +68,7 @@
   - HTTP 200, 89706 bytes
 - 상세: 성공 — 샘플 본문의 기대 문구 확인(공유재산); 날짜/대상 필드 추출은 미시험
   - 최종 URL: https://sce.gwe.go.kr/boardCnts/view.do?boardID=1595&boardSeq=7715223&lev=0&searchType=null&statusYN=W&page=1&s=kwsche&m=0301&opType=N
-  - HTTP 200, 76918 bytes
+  - HTTP 200, 76917 bytes
 - 첨부: 실패 — 파일 대신 HTML/JSON/XML 안내 응답
   - 최종 URL: https://sce.gwe.go.kr/boardCnts/fileDown.do?m=0301&s=kwsche&fileSeq=08c3951bf468c32e3f6198eefb01cfdb
   - HTTP 200, 221 bytes
@@ -103,7 +103,7 @@
 ## 삼척시탄소중립지원센터
 - 목록: 성공 — 공고 링크 20건 추출(페이지네이션/누락 여부 미검증)
   - 최종 URL: https://sc-cnsc.kangwon.ac.kr/board/notice
-  - HTTP 200, 35818 bytes
+  - HTTP 200, 35806 bytes
 - 상세: 확인필요 — 대조할 본문 문구 없음: 실제 공고 여부 미검증
   - 최종 URL: https://sc-cnsc.kangwon.ac.kr/board/notice/561
   - HTTP 200, 23067 bytes
@@ -113,9 +113,9 @@
 - 목록: 성공 — 공고 링크 11건 추출(페이지네이션/누락 여부 미검증)
   - 최종 URL: https://samchok.gwe.hs.kr/boardCnts/list.do?boardID=24970&m=0201&s=samchokhs
   - HTTP 200, 63800 bytes
-- 상세: 실패 — URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)>
+- 상세: 성공 — 샘플 본문의 기대 문구 확인(지역인문실천-강원답게); 날짜/대상 필드 추출은 미시험
   - 최종 URL: https://samchok.gwe.hs.kr/boardCnts/view.do?boardID=24970&boardSeq=9660291&lev=0&searchType=S&statusYN=W&page=1&s=samchokhs&m=0201&opType=N
-  - HTTP None, 0 bytes
+  - HTTP 200, 49179 bytes
 - 첨부: 미시험 — 첨부 URL 없음
 
 ## 정라초등학교_가정통신문
@@ -124,7 +124,7 @@
   - HTTP 200, 64749 bytes
 - 상세: 성공 — 샘플 본문의 기대 문구 확인(AI시대를 살아가는 우리 아이 공부력); 날짜/대상 필드 추출은 미시험
   - 최종 URL: https://jeongra.gwe.es.kr/boardCnts/view.do?boardID=65580&boardSeq=7716118&lev=0&searchType=S&statusYN=W&page=1&s=jeongraes&m=0203&opType=N
-  - HTTP 200, 50949 bytes
+  - HTTP 200, 50948 bytes
 - 첨부: 미시험 — 첨부 URL 없음
 
 ## 삼척초등학교_공지사항
@@ -133,7 +133,7 @@
   - HTTP 200, 57283 bytes
 - 상세: 성공 — 샘플 본문의 기대 문구 확인(2026 삼척 독서캠프); 날짜/대상 필드 추출은 미시험
   - 최종 URL: https://samcheok.gwe.es.kr/boardCnts/view.do?boardID=37778&boardSeq=9669994&lev=0&searchType=S&statusYN=W&page=1&s=samcheokes&m=0201&opType=N
-  - HTTP 200, 58940 bytes
+  - HTTP 200, 58939 bytes
 - 첨부: 미시험 — 첨부 URL 없음
 
 ## 해석
