@@ -1,7 +1,7 @@
 [
   {
     "name": "삼척시청_공지사항",
-    "checked_at": "2026-10-04T03:01:13.177181+00:00",
+    "checked_at": "2026-10-04T10:43:07.149818+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://www.samcheok.go.kr/media/00083/00089.web?gcode=1002",
     "changes": {
@@ -33,7 +33,7 @@
   },
   {
     "name": "EDUPIA_프로그램신청",
-    "checked_at": "2026-10-04T03:01:14.070039+00:00",
+    "checked_at": "2026-10-04T10:43:08.023699+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://edupiasamcheok.kr/prgm/list.do",
     "changes": {
@@ -65,7 +65,7 @@
   },
   {
     "name": "삼척시청소년수련관_공지사항",
-    "checked_at": "2026-10-04T03:01:16.147993+00:00",
+    "checked_at": "2026-10-04T10:43:10.225810+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://youth.samcheok.go.kr/youth/sub/Notice.php",
     "changes": {
@@ -104,7 +104,7 @@
   },
   {
     "name": "근덕청소년문화의집_공지사항",
-    "checked_at": "2026-10-04T03:01:21.646868+00:00",
+    "checked_at": "2026-10-04T10:43:16.335473+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://wdyouth.samcheok.go.kr/wdyouth/sub/Notice.php",
     "changes": {
@@ -133,7 +133,7 @@
   },
   {
     "name": "도계청소년장학센터_공지사항",
-    "checked_at": "2026-10-04T03:01:24.778257+00:00",
+    "checked_at": "2026-10-04T10:43:18.954684+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://dgyouth.samcheok.go.kr/dgyouth/sub/Notice.php",
     "changes": {
@@ -162,7 +162,7 @@
   },
   {
     "name": "강원특별자치도삼척교육지원청_공지사항",
-    "checked_at": "2026-10-04T03:01:27.605781+00:00",
+    "checked_at": "2026-10-04T10:43:22.050088+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://sce.gwe.go.kr/boardCnts/list.do?boardID=1595&m=0301&s=kwsche",
     "changes": {
@@ -201,7 +201,7 @@
   },
   {
     "name": "삼척관광문화재단_공지",
-    "checked_at": "2026-10-04T03:01:34.248132+00:00",
+    "checked_at": "2026-10-04T10:43:28.812191+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://www.stcf.or.kr/01298/01315.web",
     "changes": {
@@ -235,7 +235,7 @@
   },
   {
     "name": "삼척도계도시재생현장지원센터_공지",
-    "checked_at": "2026-10-04T03:01:39.506570+00:00",
+    "checked_at": "2026-10-04T10:43:34.030282+00:00",
     "environment": "GitHub Actions",
     "list_url": "http://durc.or.kr/sub/sub03_01.php",
     "changes": {
@@ -269,7 +269,7 @@
   },
   {
     "name": "삼척교육문화관",
-    "checked_at": "2026-10-04T03:01:43.417970+00:00",
+    "checked_at": "2026-10-04T10:43:37.861136+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://lib.gwe.go.kr/samecc/main",
     "changes": {
@@ -302,7 +302,7 @@
   },
   {
     "name": "삼척시탄소중립지원센터",
-    "checked_at": "2026-10-04T03:01:49.532490+00:00",
+    "checked_at": "2026-10-04T10:43:44.149811+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://sc-cnsc.kangwon.ac.kr/board/notice",
     "changes": {
@@ -316,7 +316,7 @@
       "note": "공고 링크 20건 추출(페이지네이션/누락 여부 미검증)",
       "status_code": 200,
       "final_url": "https://sc-cnsc.kangwon.ac.kr/board/notice",
-      "bytes": 35875,
+      "bytes": 35864,
       "content_type": "text/html; charset=UTF-8",
       "error": null
     },
@@ -336,7 +336,7 @@
   },
   {
     "name": "삼척고등학교_공지사항",
-    "checked_at": "2026-10-04T03:01:53.827571+00:00",
+    "checked_at": "2026-10-04T10:43:48.444847+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://samchok.gwe.hs.kr/boardCnts/list.do?boardID=24970&m=0201&s=samchokhs",
     "changes": {
@@ -370,7 +370,7 @@
   },
   {
     "name": "정라초등학교_가정통신문",
-    "checked_at": "2026-10-04T03:01:59.741719+00:00",
+    "checked_at": "2026-10-04T10:43:54.204286+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://jeongra.gwe.es.kr/boardCnts/list.do?boardID=65580&m=0203&s=jeongraes",
     "changes": {
@@ -404,7 +404,7 @@
   },
   {
     "name": "삼척초등학교_공지사항",
-    "checked_at": "2026-10-04T03:02:05.028828+00:00",
+    "checked_at": "2026-10-04T10:43:59.900133+00:00",
     "environment": "GitHub Actions",
     "list_url": "https://samcheok.gwe.es.kr/boardCnts/list.do?boardID=37778&m=0201&s=samcheokes",
     "changes": {
