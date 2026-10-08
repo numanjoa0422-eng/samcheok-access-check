@@ -17,7 +17,7 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: 저장소 체크아웃
         uses: actions/checkout@v4
@@ -30,6 +30,13 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: 첨부 문서 읽기 도구 설치
+        continue-on-error: true
+        run: |
+          python -m pip install -r requirements-attachments.txt
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils tesseract-ocr tesseract-ocr-kor
+
       - name: 판정 회귀시험
         run: python -m unittest discover -s tests -v
 
@@ -41,10 +48,21 @@ jobs:
         continue-on-error: true
         run: python scripts/collect_youth_center.py
 
+      - name: 추가 기관 자동수집 실행
+        id: boards
+        continue-on-error: true
+        run: python scripts/collect_boards.py --skip-attachments
+
+      - name: 삼척고 첨부 내용 확인
+        id: attachments
+        continue-on-error: true
+        run: python scripts/read_attachments.py --source samchokhs --limit 3
+
       - name: 실행 결과 요약
         if: always()
         env:
           COLLECTION_OUTCOME: ${{ steps.collect.outcome }}
+          BOARD_COLLECTION_OUTCOME: ${{ steps.boards.outcome }}
         run: |
           if [ -f results/latest.md ]; then
             cat results/latest.md >> "$GITHUB_STEP_SUMMARY"
@@ -64,8 +82,8 @@ jobs:
                             '저장된 공고: ' + str(len(data.get('programs', []))) + '건',
                             '마지막 수집 성공: ' + str(data.get('last_success_at') or '미확인'),
                             '마지막 시도: ' + str(data.get('last_attempt_at') or '미확인'),
-                            '', '저장된 공고 수는 검수 완료된 프로그램 수와 다릅니다. '
-                            '게시 전 review_state와 원문을 확인하세요.']
+                            '', '저장된 공고 수는 모든 필드가 확인된 프로그램 수와 다릅니다. '
+                            '불확실한 날짜·대상은 화면에서 확인 필요로 표시합니다.']
               except (ValueError, TypeError):
                   lines += ['수집 결과 파일을 읽을 수 없습니다. 수집 단계 로그를 확인하세요.']
           else:
@@ -73,6 +91,56 @@ jobs:
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as stream:
               stream.write('\n\n'.join(lines) + '\n')
           PY
+
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          lines = ['', '## 추가 기관 자동수집', '',
+                   '실행 단계: ' + os.environ.get('BOARD_COLLECTION_OUTCOME', '미실행')]
+          path = Path('data/board-programs.json')
+          if path.exists():
+              try:
+                  data = json.loads(path.read_text(encoding='utf-8'))
+                  lines += ['수집 결과: ' + str(data.get('status', '확인필요')),
+                            '보존 공고: ' + str(len(data.get('programs', []))) + '건', '',
+                            '| 기관 | 수집 상태 | 이번 확인 공고 | 실패 건수 |',
+                            '| --- | --- | ---: | ---: |']
+                  notes = []
+                  for source in data.get('sources', []):
+                      org = str(source.get('org') or source.get('name') or source.get('id')).replace('|', '/')
+                      state = str(source.get('status', '확인필요')).replace('|', '/')
+                      lines.append(f"| {org} | {state} | {source.get('collected_count', 0)} | {source.get('failed_count', 0)} |")
+                      errors = source.get('errors', [])
+                      if errors:
+                          reasons = [str(x.get('stage', '확인')) + ': ' + str(x.get('reason', '사유 없음'))
+                                     if isinstance(x, dict) else str(x) for x in errors[:3]]
+                          notes.append(org + ' 확인 사유: ' + '; '.join(reasons))
+                  lines += [''] + notes
+                  lines += ['', '처음 실행한 결과로 각 기관의 실제 수집 여부를 확인하세요. '
+                            '삼척고 첨부는 별도 단계에서 최대 3개 공고를 읽고 결과·실패 사유를 보존합니다. 글자 추출과 날짜·대상 검증은 별개입니다. '
+                            '접속 실패나 첫 페이지에서 보이지 않는 이전 공고는 삭제하지 않습니다.']
+              except (ValueError, TypeError, AttributeError):
+                  lines += ['추가 기관 자료를 읽지 못했습니다. 수집 단계 로그를 확인하세요.']
+          else:
+              lines += ['추가 기관 자료 파일이 없습니다. 수집 단계 로그를 확인하세요.']
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as stream:
+              stream.write('\n'.join(lines) + '\n')
+          PY
+
+      - name: 첨부 확인 요약
+        if: always()
+        run: |
+          python - <<'PYCODE'
+          import json, os
+          from pathlib import Path
+          p=Path('results/attachments/latest.json')
+          lines=['', '## 삼척고 첨부 확인']
+          if p.exists():
+              for r in json.loads(p.read_text()).get('records',[]):
+                  e=r['evidence'];lines.append('- '+r['title']+': '+e['status']+' (글자 추출과 내용 검증은 별개)')
+          else: lines.append('이번 실행 결과 없음: 첨부 단계 로그 확인 필요')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('\n'.join(lines)+'\n')
+          PYCODE
 
       - name: 결과 파일 보관
         if: always()
@@ -111,7 +179,7 @@ jobs:
           fi
 
       - name: 수집·저장 실패 표시
-        if: ${{ !cancelled() && (steps.collect.outcome == 'failure' || steps.persist.outcome == 'failure') }}
+        if: ${{ !cancelled() && (steps.collect.outcome == 'failure' || steps.boards.outcome == 'failure' || steps.persist.outcome == 'failure') }}
         run: |
           echo '자동수집 또는 저장소 커밋이 실패했습니다. 보관된 결과와 Summary를 확인하세요.'
           exit 1
