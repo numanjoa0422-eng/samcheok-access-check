@@ -1,0 +1,9 @@
+{
+  "origin_url": "https://dgyouth.samcheok.go.kr/dgyouth/sub/Notice.php?code=yu_notice&page=1&bbsData=bm89MjA0||&search=&searchstring=&mode=view",
+  "retrieved_at": "2026-10-02T07:03:09.719971+00:00",
+  "method": "check_access.Client.fetch GET; robots_policy checked before content GET; existing regular User-Agent; no bypass",
+  "status": 200,
+  "bytes": 26827,
+  "sha256": "1ad96157497eb037c21aeed8ce016fdd8a416a904efe088705e91b471b94ea1f",
+  "fixture": "new-board-dgyouth-detail-204.html"
+}

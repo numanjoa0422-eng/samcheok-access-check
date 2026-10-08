@@ -1,0 +1,9 @@
+{
+  "origin_url": "https://wdyouth.samcheok.go.kr/wdyouth/sub/Notice.php?code=yu_notice&page=1&bbsData=bm89MTQx||&search=&searchstring=&mode=view",
+  "retrieved_at": "2026-10-02T07:02:54.619647+00:00",
+  "method": "check_access.Client.fetch GET; robots_policy checked before content GET; existing regular User-Agent; no bypass",
+  "status": 200,
+  "bytes": 28853,
+  "sha256": "814290be489f5dc1c3d6291e98d0ed9ca035c0b5ac4991c780739bbc31331c77",
+  "fixture": "new-board-wdyouth-detail-141.html"
+}
