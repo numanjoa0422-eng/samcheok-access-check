@@ -1,0 +1,10 @@
+{
+  "origin_url": "https://www.stcf.or.kr/01298/01315.web",
+  "retrieved_at": "2026-10-02T07:02:49.848726+00:00",
+  "method": "check_access.Client.fetch GET; robots_policy checked before GET; existing regular User-Agent; no bypass",
+  "status": 200,
+  "bytes": 50804,
+  "sha256": "c7cea4afc4917703adcace570351fea1cf9c0ddd59d02438570cc9bb39dcfc79",
+  "fixture": "new-board-stcf-list.html",
+  "body_selector": "div.list1f1t3i1 > ul.lst1 > li.li1 > div.wrap1 > a.a1 > strong.t1"
+}

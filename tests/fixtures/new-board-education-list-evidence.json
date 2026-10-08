@@ -1,0 +1,9 @@
+{
+  "origin_url": "https://sce.gwe.go.kr/boardCnts/list.do?boardID=1595&m=0301&s=kwsche",
+  "retrieved_at": "2026-10-02T07:05:49.751912+00:00",
+  "method": "check_access.Client.fetch GET; robots_policy checked before content GET; existing regular User-Agent; no bypass",
+  "status": 200,
+  "bytes": 89453,
+  "sha256": "90c995c71d52eb1a2bd8fd01d055047b393239161adfdd4aaf92f00fa2d86b73",
+  "fixture": "new-board-education-list.html"
+}

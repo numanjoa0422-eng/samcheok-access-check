@@ -1,0 +1,9 @@
+{
+  "origin_url": "https://sce.gwe.go.kr/boardCnts/view.do?boardID=1595&boardSeq=7715223&lev=0&searchType=null&statusYN=W&page=1&s=kwsche&m=0301&opType=N",
+  "retrieved_at": "2026-10-02T07:03:48.317336+00:00",
+  "method": "check_access.Client.fetch GET; robots_policy checked before content GET; existing regular User-Agent; no bypass",
+  "status": 200,
+  "bytes": 76917,
+  "sha256": "c0cb21254981ae8cfe9207a080528f87485d638314203b1bc7ccf9e10238dbad",
+  "fixture": "new-board-education-detail-7715223.html"
+}
