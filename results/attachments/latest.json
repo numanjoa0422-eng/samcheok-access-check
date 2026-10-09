@@ -1,5 +1,5 @@
 {
-  "last_attempt_at": "2026-10-09T09:00:26.293916+09:00",
+  "last_attempt_at": "2026-10-09T13:47:55.748108+09:00",
   "attempted": 3,
   "records": [
     {
@@ -7,12 +7,12 @@
       "title": "2026 「지역인문실천-강원답게」 삼척 프로그램 참가자 모집",
       "evidence": {
         "last_attempt_at": "2026-10-09T09:00:26.293916+09:00",
-        "status": "extracted",
+        "status": "stale",
         "attempts": [],
         "documents": [
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=4e2f2471647e1148c5bdb77d05d936d6",
-            "status": "extracted",
+            "status": "stale",
             "attempts": [
               {
                 "route": "preview",
@@ -46,12 +46,12 @@
       "title": "학자금 지원제도 안내",
       "evidence": {
         "last_attempt_at": "2026-10-09T09:00:26.293916+09:00",
-        "status": "extracted",
+        "status": "stale",
         "attempts": [],
         "documents": [
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=5f2ea908cf92b001b1800ea43abbf5a4",
-            "status": "extracted",
+            "status": "stale",
             "attempts": [
               {
                 "route": "preview",
@@ -84,8 +84,8 @@
       "id": "board:samchokhs:9633309",
       "title": "학생주도 프로젝트 봉사활동 안내",
       "evidence": {
-        "last_attempt_at": "2026-10-08T13:47:50.255432+09:00",
-        "status": "stale",
+        "last_attempt_at": "2026-10-09T13:47:55.748108+09:00",
+        "status": "partial",
         "attempts": [],
         "documents": [
           {
@@ -101,7 +101,7 @@
           },
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=809fe97ebf1c2841aaf296259f517c19",
-            "status": "stale",
+            "status": "extracted",
             "attempts": [
               {
                 "route": "preview",
@@ -120,11 +120,11 @@
             "truncated": false,
             "text_sha256": "a78e72637f214e62329ee8c845c0a78957cae6d36ab6c7e15affa7a0c90d3730",
             "content_sha256": "99167b9f9e1558dc969b881d41d5b2289abb1541a2cdfac45f754367eb03b85a",
-            "last_success_at": "2026-10-08T13:47:50.255432+09:00"
+            "last_success_at": "2026-10-09T13:47:55.748108+09:00"
           },
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=88666bafb2d14e0c885e4dc2064ef88d",
-            "status": "stale",
+            "status": "extracted",
             "attempts": [
               {
                 "route": "preview",
@@ -143,13 +143,13 @@
             "truncated": false,
             "text_sha256": "743aa8e89cad15a19a2e12673ebf17f18683cd0d744942b3080d947f4e3cce03",
             "content_sha256": "cc09c8990008147d04b5819e0bc02b0616b1479e03be408ce18985730511ecdf",
-            "last_success_at": "2026-10-08T13:47:50.255432+09:00"
+            "last_success_at": "2026-10-09T13:47:55.748108+09:00"
           }
         ],
         "fields_verified": false,
         "found_count": 5,
         "limited": true,
-        "last_success_at": "2026-10-08T13:47:50.255432+09:00",
+        "last_success_at": "2026-10-09T13:47:55.748108+09:00",
         "content_signature": "2491ed2ffa37c9107cb8a3c955138f272392497122c07ffbd72f953339722cd1"
       }
     },
@@ -157,13 +157,13 @@
       "id": "board:samchokhs:9632206",
       "title": "2026년 하반기 알레르기질환 온라인 학부모 교육 안내",
       "evidence": {
-        "last_attempt_at": "2026-10-08T13:47:50.255432+09:00",
-        "status": "stale",
+        "last_attempt_at": "2026-10-09T13:47:55.748108+09:00",
+        "status": "extracted",
         "attempts": [],
         "documents": [
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=cc09752a69460cbbf4d77f886b336a31",
-            "status": "stale",
+            "status": "extracted",
             "attempts": [
               {
                 "route": "preview",
@@ -182,13 +182,13 @@
             "truncated": false,
             "text_sha256": "6297d6191ac11a8a024de30f25dfdad331024cd9a487c63c7cbf6cb556b05494",
             "content_sha256": "6708bb8d4cd47bccdacc448cdea3267a7664d7c9a9fe58ed9b2cef442be31d62",
-            "last_success_at": "2026-10-08T13:47:50.255432+09:00"
+            "last_success_at": "2026-10-09T13:47:55.748108+09:00"
           }
         ],
         "fields_verified": false,
         "found_count": 1,
         "limited": false,
-        "last_success_at": "2026-10-08T13:47:50.255432+09:00",
+        "last_success_at": "2026-10-09T13:47:55.748108+09:00",
         "content_signature": "2f80f2be8307c7691dbfc3c7b46a8ca25becd0ce2d17d424cefb99f7034b6d4b"
       }
     },
@@ -196,7 +196,7 @@
       "id": "board:samchokhs:9626967",
       "title": "2026학년도 배움터지킴이 자원봉사자 위촉 공고",
       "evidence": {
-        "last_attempt_at": "2026-10-08T13:47:50.255432+09:00",
+        "last_attempt_at": "2026-10-09T13:47:55.748108+09:00",
         "status": "extracted",
         "attempts": [],
         "documents": [
@@ -221,13 +221,13 @@
             "truncated": false,
             "text_sha256": "62893ab329bb9e6badb657387f70c1f6bc8cd6fdd6ebdb40156a9f54b166b1e7",
             "content_sha256": "1af5baba8026812b6edadb7c2f71ad49e537d0760021cb4961cf11da15b4c9e0",
-            "last_success_at": "2026-10-08T13:47:50.255432+09:00"
+            "last_success_at": "2026-10-09T13:47:55.748108+09:00"
           }
         ],
         "fields_verified": false,
         "found_count": 1,
         "limited": false,
-        "last_success_at": "2026-10-08T13:47:50.255432+09:00",
+        "last_success_at": "2026-10-09T13:47:55.748108+09:00",
         "content_signature": "34da85753d6534b496256b8bd8c1e30f4f6e8e6857a4a03149a3a4fdc583d2ae"
       }
     },
@@ -236,7 +236,7 @@
       "title": "'학교장 허가 교외체험학습 신청 방법 변경' 및 'NEIS 온라인 서비스 학부모 매뉴얼' 안내",
       "evidence": {
         "last_attempt_at": "2026-10-09T09:00:26.293916+09:00",
-        "status": "partial",
+        "status": "stale",
         "attempts": [],
         "documents": [
           {
@@ -252,7 +252,7 @@
           },
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=596816fb05748e421a37bd25e6b5ff68",
-            "status": "extracted",
+            "status": "stale",
             "attempts": [
               {
                 "route": "preview",
@@ -275,7 +275,7 @@
           },
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=7d3b3f1b2fe93878367512b167556786",
-            "status": "extracted",
+            "status": "stale",
             "attempts": [
               {
                 "route": "preview",
