@@ -1,18 +1,18 @@
 {
-  "last_attempt_at": "2026-10-09T13:47:55.748108+09:00",
+  "last_attempt_at": "2026-10-10T08:59:39.580717+09:00",
   "attempted": 3,
   "records": [
     {
       "id": "board:samchokhs:9660291",
       "title": "2026 「지역인문실천-강원답게」 삼척 프로그램 참가자 모집",
       "evidence": {
-        "last_attempt_at": "2026-10-09T09:00:26.293916+09:00",
-        "status": "stale",
+        "last_attempt_at": "2026-10-10T08:59:39.580717+09:00",
+        "status": "extracted",
         "attempts": [],
         "documents": [
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=4e2f2471647e1148c5bdb77d05d936d6",
-            "status": "stale",
+            "status": "extracted",
             "attempts": [
               {
                 "route": "preview",
@@ -31,13 +31,13 @@
             "truncated": false,
             "text_sha256": "3beb64420567c9cfa9c5909b68d9e001acd035d117bce748fe2e10c49d8be103",
             "content_sha256": "e0cf7697b34ef70edddfabff80aba61f7d060914f00f25ee091b49647d22b884",
-            "last_success_at": "2026-10-09T09:00:26.293916+09:00"
+            "last_success_at": "2026-10-10T08:59:39.580717+09:00"
           }
         ],
         "fields_verified": false,
         "found_count": 1,
         "limited": false,
-        "last_success_at": "2026-10-09T09:00:26.293916+09:00",
+        "last_success_at": "2026-10-10T08:59:39.580717+09:00",
         "content_signature": "fa7fa5b790ca47d7bc41dd4f4d5e2a1ca4e8def266a1474ab039041ee1d605e7"
       }
     },
@@ -45,38 +45,37 @@
       "id": "board:samchokhs:9654703",
       "title": "학자금 지원제도 안내",
       "evidence": {
-        "last_attempt_at": "2026-10-09T09:00:26.293916+09:00",
-        "status": "stale",
+        "last_attempt_at": "2026-10-10T08:59:39.580717+09:00",
+        "status": "extracted",
         "attempts": [],
         "documents": [
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=5f2ea908cf92b001b1800ea43abbf5a4",
-            "status": "stale",
+            "status": "extracted",
             "attempts": [
               {
                 "route": "preview",
                 "status": "failed",
-                "reason": "미리보기 실행 화면만 수신; 문서 글자층/변환 문서 미확보"
+                "reason": "The read operation timed out"
               },
               {
                 "route": "original",
                 "status": "extracted"
               }
             ],
-            "preview_url": "https://samchok.gwe.hs.kr/streamdocs/view/sd;streamdocsId=5KpKsVrlmvXMamRcMyT3ivoqMZt0_cXiiJihKNfDLzs",
             "text": "가  정  통  신  문\n<학자금 지원제도 안내>\n학부모님 안녕하십니까? 학부모님 가정에 평안과 건강이 가득하기를 기원합니다. 자녀의 밝고 활기찬 미래를 위해 든든하게 옆에서 지원해 주시는 학부모님께 다양한 학자금 지원제도를 안내하여 드립니다.\n교육부와 한국장학재단은 학생들이 등록금 걱정 없이 대학진학의 꿈을 이루고 공부할 수 있도록 2012년부터 국가장학금을 지원하고 있습니다. 국가장학금 외에도 다양한 대학생 지원 제도(학자금대출, 복권기금 장학금, 근로장학금, 연합기숙사 등)를 운영하고 있으니, 학생 및 학부모님께서는 한국장학재단 누리집( www.kosaf.go.kr ) 및 모바일 앱을 참고해 주시기 바랍니다.\n한국장학재단은 경제적 여건에 관계없이 누구나 의지와 능력에 따라 고등교육의 기회를 가질 수 있도록 다양한 학자금 지원제도를 운영하는 준정부기관으로서, 특별법을 기초로 2009년에 설립되었습니다.\n■ 2026년 한국장학재단의 주요 학자금지원제도\n\n유형\n내용\n소득연계형 국가\n장학금\n【신청일정】 2027학년도 신입생을 위한 1차 신청 일정은 미정이나, 통상적으로 매년 11월 하순 ∼ 12월 하순에 신청이 진행됨(추후 누리집에 공지)\n※ 2차 신청은, 매년 2∼3월 중 진행(추후 누리집에 공지)\n【지원대상】 학자금 지원 9구간 이하 대학생\n※ 다자녀국가장학금 대상: 9구간 이하로서, 다자녀가정(자녀 3명 이상)의 가구원\n(만 39세 이하 미혼에 한정)\n【지원금액】 대학생 소속 가구의 학자금 지원구간에 따라 등록금 차등 지원(2026년기준)\n\n구분\n(단위: 만 원)\n기초·차상위\n1~3구간\n4~6구간\n7~8구간\n9구간\nⅠ유형(연간)\n등록금 전액\n600\n440\n360\n100\n다자녀\n(연간)\n첫째, 둘째\n등록금 전액\n610\n505\n465\n135\n셋째 이상\n등록금 전액\n200\n【성적 및 이수학점 기준】 학부 신입생은 첫 학기에 한해 성적기준 미적용(장애인: 성적기준 미적용)\n※ 재학생의 경우 직전학기 12학점 이상 이수, 100점 만점 기준 80점(B0)이상\n취업 후 상환\n학자금\n대출\n【신청자격】 만 35세 이하 및 학자금지원 9구간 이하 학부생(※ 생활비대출은  8구간 이하)\n【지원내용】 등록금 소요액 전액(한도없음), 생활비 학기당 200만원 한도\n【대출금리】 1.7%(’26. 2학기 기준, 변동금리)\n일반 상환 학자금\n대출\n【신청자격】 만 55 이하 (학자금지원구간 제한없음)\n【지원내용】 등록금 소요액 전액(한도없음), 생활비 학기당 200만원 한도\n【대출기간】 최장 20년(최장 10년 거치, 최장 10년 상환)\n【대출금리】 1.7%(’26. 2학기 기준, 고정금리)\n농촌출신대학생 학자금\n대출\n【신청자격】 농어촌 지역에 주민등록 주소를 두고, 6개월(180일) 이상 거주하거나 농어업에 종사하고 있는 보호자의 자녀가 기본 수혜대상\n【지원내용】 등록금 소요액 전액(한도없음) ※ 생활비 대출 없음\n【대출금리】 무이자\n복권기금 꿈사다리 장학금\n【지원대상】 저소득층 가정의 우수 초5∼고3 재학생\n【지원내용】 매월 학업장려비(초등학생 15만원 / 중학생 25만원 / 고등학생 35만원 / 대학생 45만원),\n1:1멘토링, 진로역량 개발 컨설팅, 마음 건강 지원 등\n국가\n근로\n장학금\n【제도소개】 교내·외 근로를 통한 장학금 혜택 및 다양한 직업체험을 경험할 수 있는 제도\n【지원대상】 학자금지원 9구간 이하, 직전학기 성적 70점(100점 만점) 이상인 학생\n【지원내용】 2026년 단가 ☞ ①교내근로: 시간 당 10,320원 ②교외근로: 시간 당 12,790원\n국가\n우수\n장학금\n【지원대상】 이공계, 인문‧사회계, 예술‧체육계열 신입생 및 재학생\n【지원금액】 등록금 전액, Ⅰ유형 선발자 및 기초생활수급자 생활비\n전문기술인재 장학금\n【지원대상】 전문대학(고등교육법 제2조 제4호 해당)의 정규과정에 재학 중인 학생\n【지원금액】 등록금 전액, Ⅰ유형 선발자 생활비\n주거안정장학금\n【지원대상】 부모의 주민등록상 주소지가 소속 대학을 기준으로 통학이 어려워 원거리      지역에 해당하는 저소득층 대학생\n【지원금액】 월 최대 20만원(주거 관련 실비 포괄 지원)\n창업\n기숙사\n【지원대상】 국내 대학이나 대학원에 재학 중 또는 휴학 중인 학생(주거, 창업 무상지원)\n【소재지】 서울, 부산, 대구, 광주, 대전\n※ 위 내용은 ’26년 9월 기준 내용이므로, 향후 ’27년 학자금 지원 계획에 따라 지원 대상 및 내용이 변경될 수 있습니다. 실제 신청 시, 반드시 한국장학재단 누리집을 확인하시기 바랍니다.\n■ 국가장학금 알리미 소개",
             "method": "hwp_body_text",
             "coverage": "본문 텍스트; 삽입 이미지·도형 미추출",
             "truncated": false,
             "text_sha256": "c2fe88cd90098bd26ae1ae6dd38e4ae0d98c555e38bdadc0388bae4106d5c7d2",
             "content_sha256": "f68a5f4d6f01c5ee93209658691bdc4e46e84ebdb2098712f9bbfe563db5f9c9",
-            "last_success_at": "2026-10-09T09:00:26.293916+09:00"
+            "last_success_at": "2026-10-10T08:59:39.580717+09:00"
           }
         ],
         "fields_verified": false,
         "found_count": 1,
         "limited": false,
-        "last_success_at": "2026-10-09T09:00:26.293916+09:00",
+        "last_success_at": "2026-10-10T08:59:39.580717+09:00",
         "content_signature": "cc122b6d6dfdb384dab7bc12b0bd153e8f33110ea1c6ebc4482e793e1314113b"
       }
     },
@@ -85,7 +84,7 @@
       "title": "학생주도 프로젝트 봉사활동 안내",
       "evidence": {
         "last_attempt_at": "2026-10-09T13:47:55.748108+09:00",
-        "status": "partial",
+        "status": "stale",
         "attempts": [],
         "documents": [
           {
@@ -101,7 +100,7 @@
           },
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=809fe97ebf1c2841aaf296259f517c19",
-            "status": "extracted",
+            "status": "stale",
             "attempts": [
               {
                 "route": "preview",
@@ -124,7 +123,7 @@
           },
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=88666bafb2d14e0c885e4dc2064ef88d",
-            "status": "extracted",
+            "status": "stale",
             "attempts": [
               {
                 "route": "preview",
@@ -158,12 +157,12 @@
       "title": "2026년 하반기 알레르기질환 온라인 학부모 교육 안내",
       "evidence": {
         "last_attempt_at": "2026-10-09T13:47:55.748108+09:00",
-        "status": "extracted",
+        "status": "stale",
         "attempts": [],
         "documents": [
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=cc09752a69460cbbf4d77f886b336a31",
-            "status": "extracted",
+            "status": "stale",
             "attempts": [
               {
                 "route": "preview",
@@ -235,8 +234,8 @@
       "id": "board:samchokhs:8780281",
       "title": "'학교장 허가 교외체험학습 신청 방법 변경' 및 'NEIS 온라인 서비스 학부모 매뉴얼' 안내",
       "evidence": {
-        "last_attempt_at": "2026-10-09T09:00:26.293916+09:00",
-        "status": "stale",
+        "last_attempt_at": "2026-10-10T08:59:39.580717+09:00",
+        "status": "partial",
         "attempts": [],
         "documents": [
           {
@@ -252,7 +251,7 @@
           },
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=596816fb05748e421a37bd25e6b5ff68",
-            "status": "stale",
+            "status": "extracted",
             "attempts": [
               {
                 "route": "preview",
@@ -271,11 +270,11 @@
             "truncated": false,
             "text_sha256": "8799a8e7d3af91417e0e4fae27e72972a4209494236a2c29d7ab2f0c6c538bc9",
             "content_sha256": "15a0ff797b3ed5defe97558eb02bbb28f1585e9c72be48c24ca6e54fb15a229a",
-            "last_success_at": "2026-10-09T09:00:26.293916+09:00"
+            "last_success_at": "2026-10-10T08:59:39.580717+09:00"
           },
           {
             "url": "https://samchok.gwe.hs.kr/boardCnts/fileDown.do?m=0201&s=samchokhs&fileSeq=7d3b3f1b2fe93878367512b167556786",
-            "status": "stale",
+            "status": "extracted",
             "attempts": [
               {
                 "route": "preview",
@@ -294,13 +293,13 @@
             "truncated": false,
             "text_sha256": "d4a4ae24e4a46cbe1e68a6775033eb71ff85606eb5fea5422274510b2ce7b3b8",
             "content_sha256": "8d644cfd6a237aa8fd2b1c9c1eda9300c7656ae54786e37e0623ec3a6cf64d15",
-            "last_success_at": "2026-10-09T09:00:26.293916+09:00"
+            "last_success_at": "2026-10-10T08:59:39.580717+09:00"
           }
         ],
         "fields_verified": false,
         "found_count": 3,
         "limited": false,
-        "last_success_at": "2026-10-09T09:00:26.293916+09:00",
+        "last_success_at": "2026-10-10T08:59:39.580717+09:00",
         "content_signature": "ecba6553c369f6899e4c3ec1dcb65093afd918643b9b2bc3241d47c29d3740d9"
       }
     }
